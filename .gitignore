@@ -1,0 +1,17 @@
+# Archivos de Android Studio
+*.iml
+.idea/
+
+# Gradle
+.gradle/
+build/
+*/build/
+
+# Config local
+local.properties
+
+# Caches y temporales
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
