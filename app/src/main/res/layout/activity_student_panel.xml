@@ -7,10 +7,10 @@
     android:fitsSystemWindows="true">
 
     <TextView
-        android:id="@+id/tvWelcome"
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¡Bienvenido!"
+        android:text="Panel Estudiante"
         android:textSize="32sp"
         android:textStyle="bold"
         android:textColor="@color/purple_700"
@@ -20,29 +20,29 @@
         android:layout_marginTop="48dp" />
 
     <TextView
-        android:id="@+id/tvUserEmail"
+        android:id="@+id/tvWelcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="usuario@email.com"
-        android:textSize="18sp"
+        android:text="¡Bienvenido!"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre Apellido"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/tvWelcome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
-
-    <TextView
-        android:id="@+id/tvHomeMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        android:textColor="@color/purple_500"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="8dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnLogout"

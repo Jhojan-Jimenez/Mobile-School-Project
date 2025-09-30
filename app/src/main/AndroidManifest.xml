@@ -25,7 +25,23 @@
         </activity>
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".AdminPanelActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".StudentPanelActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".GuardianPanelActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".TeacherPanelActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CreateUserActivity"
             android:exported="false" />
 
         <activity
