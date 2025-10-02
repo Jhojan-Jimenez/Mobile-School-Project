@@ -1,36 +1,36 @@
 package com.jhojan.school_project
 
-import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
 import com.jhojan.school_project.databinding.ActivityAdminPanelBinding
 
 class AdminPanelActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityAdminPanelBinding
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminPanelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
-
-        setupListeners()
-    }
-
-    private fun setupListeners() {
-        binding.btnCreateUser.setOnClickListener {
-            startActivity(Intent(this, CreateUserActivity::class.java))
+        // Top bar actions
+        binding.btnBell.setOnClickListener {
+            Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
         }
 
-        binding.btnLogout.setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+        // Ejemplos de clicks sobre algunas tarjetas
+        binding.gridAcademic.getChildAt(0)?.setOnClickListener {
+            Toast.makeText(this, "Gestionar Estudiantes", Toast.LENGTH_SHORT).show()
+        }
+        binding.gridAcademic.getChildAt(1)?.setOnClickListener {
+            Toast.makeText(this, "Gestionar Docentes", Toast.LENGTH_SHORT).show()
+        }
+
+        // Bottom nav demo
+        binding.bottomNav.setOnItemSelectedListener {
+            Toast.makeText(this, it.title, Toast.LENGTH_SHORT).show()
+            true
         }
     }
 }

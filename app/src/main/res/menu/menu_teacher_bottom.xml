@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_home" android:title="Inicio"
+        android:icon="@android:drawable/ic_menu_view"/>
+    <item android:id="@+id/nav_profile" android:title="Perfil"
+        android:icon="@android:drawable/ic_menu_myplaces"/>
+    <item android:id="@+id/nav_support" android:title="Soporte"
+        android:icon="@android:drawable/ic_menu_help"/>
+    <item android:id="@+id/nav_notifications" android:title="Notificaciones"
+        android:icon="@android:drawable/ic_popup_reminder"/>
+</menu>

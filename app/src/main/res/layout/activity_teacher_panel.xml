@@ -1,58 +1,436 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:fitsSystemWindows="true">
+    android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+    <!-- AppBar con Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            style="@style/Widget.Material3.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:titleCentered="true"
+            app:title="Carlos G. - Docente"
+            app:navigationIcon="@android:drawable/ic_menu_manage"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Contenido scrollable -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Cabecera tipo HTML: engranaje - título - campana -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="4dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/btnSettings"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_manage"/>
+
+                <TextView
+                    android:id="@+id/tvHeaderTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Carlos G. - Docente"
+                    android:textColor="#111418"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+
+                <ImageView
+                    android:id="@+id/btnNotifications"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_popup_reminder"/>
+            </LinearLayout>
+
+            <!-- Hero -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_margin="16dp"
+                android:background="@drawable/bg_card_rounded">
+
+                <ImageView
+                    android:id="@+id/imgHero"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@android:color/darker_gray"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/overlay_gradient_bottom"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvUserName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Hola, Carlos"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/tvSubtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Actualmente enseñas 5 asignaturas y tienes 2 tareas pendientes por calificar"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:paddingTop="4dp"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Resumen -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Resumen"
+                android:textColor="#111418"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <!-- Card 1 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_card_rounded_border"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Asignaturas"
+                        android:textColor="#111418"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tvSubjects"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5"
+                        android:textColor="#111418"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+
+                <!-- Card 2 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_card_rounded_border"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tareas Pendientes"
+                        android:textColor="#111418"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tvPendingTasks"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textColor="#111418"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+
+                <!-- Card 3 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_card_rounded_border"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estudiantes"
+                        android:textColor="#111418"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/tvStudents"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="120"
+                        android:textColor="#111418"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Gestión Académica -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gestión Académica"
+                android:textColor="#111418"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"/>
+
+            <!-- Filas (estilo en styles_components.xml) -->
+            <LinearLayout
+                android:id="@+id/rowAssignTasks"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_input_add"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Asignar Tareas"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowReviewTasks"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_menu_agenda"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Revisar Tareas"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowRegisterGrades"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_menu_edit"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Registrar Calificaciones"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowViewGrades"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_menu_sort_by_size"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Ver Calificaciones Registradas"/>
+            </LinearLayout>
+
+            <!-- Asistencia y Observaciones -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Asistencia y Observaciones"
+                android:textColor="#111418"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"/>
+
+            <LinearLayout
+                android:id="@+id/rowRegisterAttendance"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_menu_month"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Registrar Asistencia"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowAttendanceHistory"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_menu_recent_history"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Consultar Historial de Asistencia"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowAddObservations"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_menu_info_details"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Ingresar Observaciones Disciplinarias"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowObservationsHistory"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_menu_search"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Consultar Historial de Observaciones"/>
+            </LinearLayout>
+
+            <!-- Comunicación y Calendario -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comunicación y Calendario"
+                android:textColor="#111418"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"/>
+
+            <LinearLayout
+                android:id="@+id/rowViewCalendar"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_menu_month"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Consultar Calendario Académico"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowProposeCalendar"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_input_add"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Proponer Actividades en Calendario"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowWriteMessage"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_dialog_email"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Redactar Comunicación"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rowSendNotification"
+                style="@style/RowItemStyle">
+
+                <FrameLayout style="@style/RowIconContainer">
+                    <ImageView style="@style/RowIconImage"
+                        android:src="@android:drawable/ic_popup_reminder"/>
+                </FrameLayout>
+
+                <TextView style="@style/RowTitle"
+                    android:text="Mandar Notificación"/>
+            </LinearLayout>
+
+            <!-- Botón Cerrar sesión -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="Cerrar sesión"/>
+
+            <!-- espacio para que no tape el BottomNav -->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="84dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Panel Profesor"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="@color/purple_700"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="48dp" />
-
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="¡Bienvenido!"
-        android:textSize="24sp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
-
-    <TextView
-        android:id="@+id/tvUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre Apellido"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/tvWelcome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cerrar sesión"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="48dp" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_gravity="bottom"
+        app:menu="@menu/menu_teacher_bottom"
+        app:labelVisibilityMode="labeled"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
