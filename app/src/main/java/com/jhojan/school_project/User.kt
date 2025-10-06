@@ -9,3 +9,18 @@ data class User(
     val Direccion: String = "",
     val correo: String = ""
 )
+
+data class Student(
+    val grado: String = "",
+    val grupo: String = "",
+    val user: User = User()
+)
+data class Guardian(
+    val parentesco: String ="",
+    val user: User = User()
+)
+data class Teacher(
+    val departamento:String="",
+    val asignatura:String="",
+    val user: User = User()
+)

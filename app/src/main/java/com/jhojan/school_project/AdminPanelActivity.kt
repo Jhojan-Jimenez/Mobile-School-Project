@@ -1,8 +1,9 @@
 package com.jhojan.school_project
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.jhojan.school_project.databinding.ActivityAdminPanelBinding
 
 class AdminPanelActivity : AppCompatActivity() {
@@ -14,23 +15,14 @@ class AdminPanelActivity : AppCompatActivity() {
         binding = ActivityAdminPanelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Top bar actions
-        binding.btnBell.setOnClickListener {
-            Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
-        }
+        setupNavigation()
+    }
 
-        // Ejemplos de clicks sobre algunas tarjetas
-        binding.gridAcademic.getChildAt(0)?.setOnClickListener {
-            Toast.makeText(this, "Gestionar Estudiantes", Toast.LENGTH_SHORT).show()
-        }
-        binding.gridAcademic.getChildAt(1)?.setOnClickListener {
-            Toast.makeText(this, "Gestionar Docentes", Toast.LENGTH_SHORT).show()
-        }
+    private fun setupNavigation() {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        // Bottom nav demo
-        binding.bottomNav.setOnItemSelectedListener {
-            Toast.makeText(this, it.title, Toast.LENGTH_SHORT).show()
-            true
-        }
+        binding.bottomNav.setupWithNavController(navController)
     }
 }

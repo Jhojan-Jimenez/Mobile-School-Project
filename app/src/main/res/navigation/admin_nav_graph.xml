@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/admin_nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.jhojan.school_project.HomeFragment"
+        android:label="Inicio" />
+
+    <fragment
+        android:id="@+id/nav_estudiantes"
+        android:name="com.jhojan.school_project.StudentListFragment"
+        android:label="Estudiantes" />
+
+    <fragment
+        android:id="@+id/nav_docentes"
+        android:name="com.jhojan.school_project.TeacherListFragment"
+        android:label="Docentes" />
+
+    <fragment
+        android:id="@+id/nav_cursos"
+        android:name="com.jhojan.school_project.PlaceholderFragment"
+        android:label="Cursos" />
+
+    <fragment
+        android:id="@+id/nav_configuraciones"
+        android:name="com.jhojan.school_project.PlaceholderFragment"
+        android:label="Configuración" />
+
+</navigation>

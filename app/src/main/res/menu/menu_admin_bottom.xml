@@ -2,10 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nav_home" android:title="Inicio"
         android:icon="@android:drawable/ic_menu_view"/>
-    <item android:id="@+id/nav_profile" android:title="Perfil"
+    <item android:id="@+id/nav_estudiantes" android:title="Estudiantes"
         android:icon="@android:drawable/ic_menu_myplaces"/>
-    <item android:id="@+id/nav_support" android:title="Soporte"
+    <item android:id="@+id/nav_docentes" android:title="Docentes"
         android:icon="@android:drawable/ic_menu_help"/>
-    <item android:id="@+id/nav_notifications" android:title="Notificaciones"
+    <item android:id="@+id/nav_cursos" android:title="Cursos"
+        android:icon="@android:drawable/ic_popup_reminder"/>
+    <item android:id="@+id/nav_configuraciones" android:title="Configuración"
         android:icon="@android:drawable/ic_popup_reminder"/>
 </menu>
