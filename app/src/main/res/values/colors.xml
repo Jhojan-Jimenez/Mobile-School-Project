@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black_title">#121417</color>
+    <color name="gray_400">#61758A</color>
+    <color name="general">#002C72</color>
+    <color name="administrativo">#652E7E</color>
+    <color name="acudiente">#CA8000</color>
+    <color name="docente">#009DC3</color>
+    <color name="estudiante">#006E2C</color>
 </resources>
