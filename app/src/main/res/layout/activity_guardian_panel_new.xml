@@ -21,14 +21,14 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             app:defaultNavHost="true"
-            app:navGraph="@navigation/teacher_nav_graph" />
+            app:navGraph="@navigation/guardian_nav_graph" />
 
         <!-- Bottom Navigation -->
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/menu_teacher_bottom"
+            app:menu="@menu/menu_guardian_bottom"
             app:labelVisibilityMode="labeled" />
     </LinearLayout>
 
