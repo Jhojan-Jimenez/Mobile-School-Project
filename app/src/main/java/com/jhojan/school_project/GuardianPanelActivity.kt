@@ -149,6 +149,11 @@ class GuardianPanelActivity : AppCompatActivity() {
                 R.id.nav_profile -> true
                 R.id.nav_support -> { Toast.makeText(this, "Soporte", Toast.LENGTH_SHORT).show(); true }
                 R.id.nav_bell -> { Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show(); true }
+                R.id.nav_configuraciones -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
                 else -> false
             }
         }

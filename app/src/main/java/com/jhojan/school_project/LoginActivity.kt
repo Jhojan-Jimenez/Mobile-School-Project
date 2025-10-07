@@ -20,13 +20,22 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         try {
-            binding = ActivityLoginBinding.inflate(layoutInflater)
-            setContentView(binding.root)
-
             // Inicializar Firebase explícitamente
             FirebaseApp.initializeApp(this)
             auth = FirebaseAuth.getInstance()
             db = FirebaseFirestore.getInstance()
+
+            // Verificar si ya hay un usuario logueado
+            val currentUser = auth.currentUser
+            if (currentUser != null) {
+                // Usuario ya está logueado, redirigir automáticamente
+                loadUserDataAndRedirect(currentUser.uid)
+                return
+            }
+
+            // Si no hay sesión activa, mostrar pantalla de login
+            binding = ActivityLoginBinding.inflate(layoutInflater)
+            setContentView(binding.root)
 
             setupListeners()
         } catch (e: Exception) {
@@ -141,9 +150,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showLoading(show: Boolean) {
-        binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
-        binding.btnLogin.isEnabled = !show
-        binding.etEmail.isEnabled = !show
-        binding.etPassword.isEnabled = !show
+        // Verificar si binding está inicializado (solo cuando se muestra el login)
+        if (::binding.isInitialized) {
+            binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
+            binding.btnLogin.isEnabled = !show
+            binding.etEmail.isEnabled = !show
+            binding.etPassword.isEnabled = !show
+        }
     }
 }

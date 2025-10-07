@@ -16,4 +16,6 @@
         android:id="@+id/nav_bell"
         android:icon="@android:drawable/ic_dialog_info"
         android:title="Notificaciones" />
+    <item android:id="@+id/nav_configuraciones" android:title="Configuración"
+        android:icon="@android:drawable/ic_menu_compass"/>
 </menu>

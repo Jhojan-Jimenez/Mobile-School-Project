@@ -1,5 +1,6 @@
 package com.jhojan.school_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -66,6 +67,11 @@ class StudentPanelActivity : AppCompatActivity() {
                 }
                 R.id.nav_bell -> {
                     Toast.makeText(this, "Notificaciones", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.nav_configuraciones -> {
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 else -> false

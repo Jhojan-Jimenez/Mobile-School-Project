@@ -8,4 +8,6 @@
         android:icon="@android:drawable/ic_menu_help"/>
     <item android:id="@+id/nav_notifications" android:title="Notificaciones"
         android:icon="@android:drawable/ic_popup_reminder"/>
+    <item android:id="@+id/nav_configuraciones" android:title="Configuración"
+        android:icon="@android:drawable/ic_menu_compass"/>
 </menu>
