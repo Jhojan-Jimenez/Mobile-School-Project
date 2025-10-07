@@ -24,3 +24,30 @@ data class Teacher(
     val asignatura:String="",
     val user: User = User()
 )
+
+data class Clase(
+    val id: String = "",
+    val nombre: String = "",
+    val asignatura: String = "",
+    val grado: String = "",
+    val grupo: String = "",
+    val teacherId: String = "",
+    val teacherName: String = "",
+    val horario: List<String> = listOf(), // ["Lunes", "Miércoles", "Viernes"]
+    val año: String = ""
+)
+
+data class EstudianteAsistencia(
+    val studentId: String = "",
+    val studentName: String = "",
+    val status: String = "" // "presente", "ausente", "tarde", "excusado"
+)
+
+data class SesionAsistencia(
+    val id: String = "",
+    val claseId: String = "",
+    val date: String = "",
+    val timestamp: Long = 0,
+    val teacherId: String = "",
+    val students: List<EstudianteAsistencia> = listOf()
+)

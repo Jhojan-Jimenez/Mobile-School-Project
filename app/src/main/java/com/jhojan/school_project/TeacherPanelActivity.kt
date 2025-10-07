@@ -85,6 +85,12 @@ class TeacherPanelActivity : AppCompatActivity() {
             Toast.makeText(this, "Notificaciones (pendiente)", Toast.LENGTH_SHORT).show()
         }
 
+        // Registrar Asistencia
+        binding.rowRegisterAttendance.setOnClickListener {
+            val intent = Intent(this, ClasesProfesorActivity::class.java)
+            startActivity(intent)
+        }
+
         // Logout
         binding.btnLogout.setOnClickListener {
             auth.signOut()
