@@ -85,6 +85,11 @@ class TeacherPanelActivity : AppCompatActivity() {
             Toast.makeText(this, "Notificaciones (pendiente)", Toast.LENGTH_SHORT).show()
         }
 
+
+        binding.rowAssignTasks.setOnClickListener {
+            abrirCrearTarea()
+        }
+
         // Logout
         binding.btnLogout.setOnClickListener {
             auth.signOut()
