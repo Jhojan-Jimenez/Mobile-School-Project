@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Círculo de iniciales -->
+        <TextView
+            android:id="@+id/tvIniciales"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="AA"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:background="@drawable/bg_circle_present" />
+
+        <!-- Nombre y curso -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="12dp">
+
+            <TextView
+                android:id="@+id/tvNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Andrés Álvarez"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tvCurso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Grado 8A"
+                android:textSize="14sp"
+                android:textColor="@color/gray_400" />
+        </LinearLayout>
+
+        <!-- Switch -->
+        <Switch
+            android:id="@+id/switchAsistencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="Ausente"
+            android:textOn="Presente"
+            android:checked="true" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
