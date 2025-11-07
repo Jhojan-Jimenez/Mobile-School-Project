@@ -87,8 +87,15 @@ class TeacherPanelActivity : AppCompatActivity() {
 
 
         binding.rowAssignTasks.setOnClickListener {
-            abrirCrearTarea()
+            val intent = Intent(this, ActivityCrearTarea::class.java)
+            startActivity(intent)
         }
+
+        binding.rowReviewTasks.setOnClickListener {
+            val intent = Intent(this, RevisarTareaActivity::class.java)
+            startActivity(intent)
+        }
+
 
         // Logout
         binding.btnLogout.setOnClickListener {
