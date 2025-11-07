@@ -20,9 +20,29 @@
         android:label="Docentes" />
 
     <fragment
+        android:id="@+id/nav_acudientes"
+        android:name="com.jhojan.school_project.GuardianListFragment"
+        android:label="Acudientes" />
+
+    <fragment
         android:id="@+id/nav_cursos"
-        android:name="com.jhojan.school_project.PlaceholderFragment"
+        android:name="com.jhojan.school_project.CourseListFragment"
         android:label="Cursos" />
+
+    <fragment
+        android:id="@+id/nav_asignaturas"
+        android:name="com.jhojan.school_project.SubjectListFragment"
+        android:label="Asignaturas" />
+
+    <fragment
+        android:id="@+id/nav_eventos"
+        android:name="com.jhojan.school_project.EventListFragment"
+        android:label="Eventos" />
+
+    <fragment
+        android:id="@+id/nav_noticias"
+        android:name="com.jhojan.school_project.NewsListFragment"
+        android:label="Noticias" />
 
     <fragment
         android:id="@+id/nav_configuraciones"

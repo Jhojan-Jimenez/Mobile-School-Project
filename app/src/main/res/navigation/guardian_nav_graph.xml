@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/guardian_nav_graph"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.jhojan.school_project.GuardianHomeFragment"
+        android:label="Inicio" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.jhojan.school_project.GuardianHomeFragment"
+        android:label="Perfil" />
+
+    <fragment
+        android:id="@+id/nav_help"
+        android:name="com.jhojan.school_project.GuardianHomeFragment"
+        android:label="Soporte" />
+
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.jhojan.school_project.GuardianHomeFragment"
+        android:label="Notificaciones" />
+
+    <fragment
+        android:id="@+id/nav_configuraciones"
+        android:name="com.jhojan.school_project.SettingsFragment"
+        android:label="Configuración" />
+
+</navigation>

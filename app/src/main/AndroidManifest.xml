@@ -70,6 +70,14 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
+            android:name=".ClasesProfesorActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AsistenciaActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
     </application>

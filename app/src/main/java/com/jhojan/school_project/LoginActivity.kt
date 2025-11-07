@@ -82,25 +82,46 @@ class LoginActivity : AppCompatActivity() {
     private fun loginUser(email: String, password: String) {
         showLoading(true)
 
+        Log.d("LoginActivity", "Intentando login con email: $email")
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Login exitoso, obtener datos del usuario
+                    Log.d("LoginActivity", "Login exitoso")
                     val currentUser = auth.currentUser
                     if (currentUser != null) {
+                        Log.d("LoginActivity", "Usuario obtenido: ${currentUser.uid}")
                         loadUserDataAndRedirect(currentUser.uid)
                     } else {
                         showLoading(false)
+                        Log.e("LoginActivity", "CurrentUser es null después de login exitoso")
                         Toast.makeText(this, "Error al obtener usuario", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     showLoading(false)
-                    // Error en login
-                    Toast.makeText(
-                        this,
-                        "Correo o contraseña inválidos",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    // Error en login - loguear detalles completos
+                    val exception = task.exception
+                    Log.e("LoginActivity", "Error en login", exception)
+                    Log.e("LoginActivity", "Mensaje de error: ${exception?.message}")
+                    Log.e("LoginActivity", "Tipo de excepción: ${exception?.javaClass?.simpleName}")
+
+                    // Mostrar mensaje de error más específico
+                    val errorMessage = when {
+                        exception?.message?.contains("password is invalid", ignoreCase = true) == true ->
+                            "Contraseña incorrecta"
+                        exception?.message?.contains("no user record", ignoreCase = true) == true ->
+                            "No existe una cuenta con este correo"
+                        exception?.message?.contains("email address is badly formatted", ignoreCase = true) == true ->
+                            "Formato de correo inválido"
+                        exception?.message?.contains("network", ignoreCase = true) == true ->
+                            "Error de conexión. Verifica tu internet"
+                        exception?.message?.contains("too many requests", ignoreCase = true) == true ->
+                            "Demasiados intentos. Intenta más tarde"
+                        else -> "Error: ${exception?.message ?: "Desconocido"}"
+                    }
+
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
                 }
             }
     }
@@ -145,7 +166,21 @@ class LoginActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 showLoading(false)
                 Log.e("LoginActivity", "Error al cargar usuario", e)
-                Toast.makeText(this, "Error al cargar los datos: ${e.message}", Toast.LENGTH_LONG).show()
+
+                // Si hay error de permisos, cerrar sesión automáticamente
+                if (e.message?.contains("PERMISSION_DENIED", ignoreCase = true) == true) {
+                    Toast.makeText(this, "Sesión inválida. Por favor, inicia sesión nuevamente.", Toast.LENGTH_LONG).show()
+                    auth.signOut()
+
+                    // Mostrar pantalla de login si no está inicializada
+                    if (!::binding.isInitialized) {
+                        binding = ActivityLoginBinding.inflate(layoutInflater)
+                        setContentView(binding.root)
+                        setupListeners()
+                    }
+                } else {
+                    Toast.makeText(this, "Error al cargar los datos: ${e.message}", Toast.LENGTH_LONG).show()
+                }
             }
     }
 
