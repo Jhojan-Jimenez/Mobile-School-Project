@@ -25,10 +25,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Top bar actions
-        binding.btnBell.setOnClickListener {
-            Toast.makeText(requireContext(), "Notificaciones", Toast.LENGTH_SHORT).show()
-        }
 
         // Grid clicks
         binding.gridAcademic.getChildAt(0)?.setOnClickListener {
