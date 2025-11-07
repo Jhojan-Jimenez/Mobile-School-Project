@@ -46,6 +46,7 @@
 
             <!-- Estudiantes -->
             <LinearLayout
+                android:id="@+id/cardStudents"
                 style="@style/GridCard"
                 app:layout_columnWeight="1"
                 android:layout_margin="6dp">
@@ -80,6 +81,7 @@
 
             <!-- Docentes -->
             <LinearLayout
+                android:id="@+id/cardTeachers"
                 style="@style/GridCard"
                 app:layout_columnWeight="1"
                 android:layout_margin="6dp">
@@ -114,6 +116,7 @@
 
             <!-- Acudientes -->
             <LinearLayout
+                android:id="@+id/cardGuardians"
                 style="@style/GridCard"
                 app:layout_columnWeight="1"
                 android:layout_margin="6dp">
@@ -148,6 +151,7 @@
 
             <!-- Cursos -->
             <LinearLayout
+                android:id="@+id/cardCourses"
                 style="@style/GridCard"
                 app:layout_columnWeight="1"
                 android:layout_margin="6dp">
@@ -182,6 +186,7 @@
 
             <!-- Asignaturas -->
             <LinearLayout
+                android:id="@+id/cardSubjects"
                 style="@style/GridCard"
                 app:layout_columnWeight="1"
                 android:layout_margin="6dp">
@@ -295,21 +300,21 @@
             android:padding="16dp"
             app:columnCount="2">
 
-            <LinearLayout style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
+            <LinearLayout android:id="@+id/cardPeriodos" style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
                 <FrameLayout style="@style/RowIconContainer">
                     <ImageView style="@style/RowIconImage" android:src="@android:drawable/ic_menu_month"/>
                 </FrameLayout>
                 <TextView style="@style/RowTitle" android:text="Periodos Académicos"/>
             </LinearLayout>
 
-            <LinearLayout style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
+            <LinearLayout android:id="@+id/cardEscalas" style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
                 <FrameLayout style="@style/RowIconContainer">
                     <ImageView style="@style/RowIconImage" android:src="@android:drawable/ic_menu_sort_by_size"/>
                 </FrameLayout>
                 <TextView style="@style/RowTitle" android:text="Escalas de Calificación"/>
             </LinearLayout>
 
-            <LinearLayout style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
+            <LinearLayout android:id="@+id/cardCalendario" style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
                 <FrameLayout style="@style/RowIconContainer">
                     <ImageView style="@style/RowIconImage" android:src="@android:drawable/ic_menu_today"/>
                 </FrameLayout>
@@ -336,14 +341,14 @@
             android:padding="16dp"
             app:columnCount="2">
 
-            <LinearLayout style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
+            <LinearLayout style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp"  android:id="@+id/cardNews">
                 <FrameLayout style="@style/RowIconContainer">
                     <ImageView style="@style/RowIconImage" android:src="@android:drawable/ic_menu_share"/>
                 </FrameLayout>
                 <TextView style="@style/RowTitle" android:text="Publicar Circulares/Avisos"/>
             </LinearLayout>
 
-            <LinearLayout style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
+            <LinearLayout android:id="@+id/cardReportes" style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
                 <FrameLayout style="@style/RowIconContainer">
                     <ImageView style="@style/RowIconImage" android:src="@android:drawable/ic_menu_save"/>
                 </FrameLayout>

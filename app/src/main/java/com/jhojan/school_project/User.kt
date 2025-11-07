@@ -51,3 +51,34 @@ data class SesionAsistencia(
     val teacherId: String = "",
     val students: List<EstudianteAsistencia> = listOf()
 )
+
+data class Course(
+    val id: String = "",
+    val nombre: String = "",
+    val grado: String = "",
+    val grupo: String = "",
+    val descripcion: String = ""
+)
+
+data class Event(
+    val id: String = "",
+    val titulo: String = "",
+    val descripcion: String = "",
+    val fecha: String = "",
+    val lugar: String = ""
+)
+
+data class Subject(
+    val id: String = "",
+    val nombre: String = "",
+    val codigo: String = "",
+    val area: String = ""
+)
+
+data class News(
+    val id: String = "",
+    val titulo: String = "",
+    val contenido: String = "",
+    val fecha: String = "",
+    val autor: String = ""
+)

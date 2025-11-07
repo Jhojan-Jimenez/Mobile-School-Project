@@ -45,9 +45,25 @@ class AdminPanelActivity : AppCompatActivity() {
                     binding.btnBack.visibility = View.VISIBLE
                     "Docentes"
                 }
+                R.id.nav_acudientes -> {
+                    binding.btnBack.visibility = View.VISIBLE
+                    "Acudientes"
+                }
                 R.id.nav_cursos -> {
                     binding.btnBack.visibility = View.VISIBLE
                     "Cursos"
+                }
+                R.id.nav_asignaturas -> {
+                    binding.btnBack.visibility = View.VISIBLE
+                    "Asignaturas"
+                }
+                R.id.nav_eventos -> {
+                    binding.btnBack.visibility = View.VISIBLE
+                    "Eventos"
+                }
+                R.id.nav_noticias -> {
+                    binding.btnBack.visibility = View.VISIBLE
+                    "Noticias"
                 }
                 R.id.nav_configuraciones -> {
                     binding.btnBack.visibility = View.VISIBLE
