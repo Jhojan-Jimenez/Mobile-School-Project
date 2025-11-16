@@ -68,18 +68,23 @@ class TeacherListFragment : Fragment() {
                 for (document in documents) {
                     val user = User(
                         id = document.getString("id") ?: "",
-                        nombre = document.getString("nombre") ?: "",
-                        apellido = document.getString("apellido") ?: "",
+                        nombre_completo = document.getString("nombre_completo") ?: "",
                         rol = document.getString("rol") ?: "",
                         telefono = document.getString("telefono") ?: "",
-                        Direccion = document.getString("Direccion") ?: "",
-                        correo = document.getString("correo") ?: ""
+                        correo = document.getString("correo") ?: "",
+                        activo = document.getBoolean("activo") ?: true,
+                        // Legacy fields
+                        nombre = document.getString("nombre") ?: "",
+                        apellido = document.getString("apellido") ?: "",
+                        Direccion = document.getString("Direccion") ?: ""
                     )
 
                     val teacher = Teacher(
+                        especialidad = document.getString("especialidad") ?: "",
+                        user = user,
+                        // Legacy fields
                         departamento = document.getString("departamento") ?: "",
-                        asignatura = document.getString("asignatura") ?: "",
-                        user = user
+                        asignatura = document.getString("asignatura") ?: ""
                     )
                     teachers.add(teacher)
                 }

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/docente"
-        android:padding="16dp">
+        android:padding="16dp" >
 
         <TextView
             android:id="@+id/tvClaseName"

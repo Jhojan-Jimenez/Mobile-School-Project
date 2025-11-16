@@ -15,7 +15,7 @@ class CourseAdapter(
 
         fun bind(course: Course) {
             binding.tvCourseName.text = course.nombre
-            binding.tvCourseInfo.text = "Grado ${course.grado} - Grupo ${course.grupo}"
+            binding.tvCourseInfo.text = "Código: ${course.codigo}"
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(course)

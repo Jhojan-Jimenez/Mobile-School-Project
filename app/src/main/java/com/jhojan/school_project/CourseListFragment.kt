@@ -1,5 +1,6 @@
 package com.jhojan.school_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +51,8 @@ class CourseListFragment : Fragment() {
 
     private fun setupListeners() {
         binding.fabAddCourse.setOnClickListener {
-            Toast.makeText(requireContext(), "Agregar curso - Próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), CreateCourseActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -65,9 +67,7 @@ class CourseListFragment : Fragment() {
                     val course = Course(
                         id = document.id,
                         nombre = document.getString("nombre") ?: "",
-                        grado = document.getString("grado") ?: "",
-                        grupo = document.getString("grupo") ?: "",
-                        descripcion = document.getString("descripcion") ?: ""
+                        codigo = document.getString("codigo") ?: ""
                     )
                     courses.add(course)
                 }

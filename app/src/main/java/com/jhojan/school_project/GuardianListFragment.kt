@@ -68,17 +68,22 @@ class GuardianListFragment : Fragment() {
                 for (document in documents) {
                     val user = User(
                         id = document.getString("id") ?: "",
-                        nombre = document.getString("nombre") ?: "",
-                        apellido = document.getString("apellido") ?: "",
+                        nombre_completo = document.getString("nombre_completo") ?: "",
                         rol = document.getString("rol") ?: "",
                         telefono = document.getString("telefono") ?: "",
-                        Direccion = document.getString("Direccion") ?: "",
-                        correo = document.getString("correo") ?: ""
+                        correo = document.getString("correo") ?: "",
+                        activo = document.getBoolean("activo") ?: true,
+                        // Legacy fields
+                        nombre = document.getString("nombre") ?: "",
+                        apellido = document.getString("apellido") ?: "",
+                        Direccion = document.getString("Direccion") ?: ""
                     )
 
                     val guardian = Guardian(
-                        parentesco = document.getString("parentesco") ?: "",
-                        user = user
+                        direccion = document.getString("direccion") ?: "",
+                        user = user,
+                        // Legacy field
+                        parentesco = document.getString("parentesco") ?: ""
                     )
                     guardians.add(guardian)
                 }

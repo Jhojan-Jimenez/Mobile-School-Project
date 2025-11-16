@@ -1,5 +1,6 @@
 package com.jhojan.school_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jhojan.school_project.databinding.FragmentStudentHomeBinding
 
 class StudentHomeFragment : Fragment() {
 
     private var _binding: FragmentStudentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,14 +30,37 @@ class StudentHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        loadUserData()
         setupUI()
-        setupClicks()
+        setupClickListeners()
+    }
+
+    private fun loadUserData() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            db.collection("users")
+                .document(currentUser.uid)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val nombreCompleto = document.getString("nombre_completo") ?: "Estudiante"
+                        val rol = document.getString("rol") ?: "Estudiante"
+
+                        binding.tvStudentName.text = nombreCompleto
+                        binding.tvRole.text = rol
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Error al cargar datos: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun setupUI() {
-        binding.tvStudentName.text = "Alex Ramirez"
-        binding.tvRole.text = "Estudiante"
-
         Glide.with(this)
             .load("https://lh3.googleusercontent.com/aida-public/AB6AXuAnP2WWoz9Cc6kaOMAkhsMy0xrMLZ4qrvd790pNEAMpwe0BK9eEVmj_5Gv4xe0PudRpyKDTfRHDUpH5_KJtl7-CrepjoNygXV5giJh3J7PYxXL64Tbu-jrmef7uFUWqw3uF6K8_Vdu3T81SuUpb0xWQ-bFIzb0LGgcHs7kGEm0jcsdi-xzq__8ciXs68RxTCoNtWkKf28fBaSMeSN0uhESIlEiCDyRd4fkrodGP3jBYRbN1OUiaTds-rqxAaCL11ORbU4uIfbMfyY4")
             .placeholder(android.R.color.darker_gray)
@@ -54,12 +82,23 @@ class StudentHomeFragment : Fragment() {
             .into(binding.imgCard3)
     }
 
-    private fun setupClicks() {
-        binding.btnSettings.setOnClickListener {
-            Toast.makeText(requireContext(), "Abrir ajustes", Toast.LENGTH_SHORT).show()
+    private fun setupClickListeners() {
+        // Card 1: Calendario - Ver fechas importantes
+        binding.cardCalendar.setOnClickListener {
+            val intent = Intent(requireContext(), CalendarActivity::class.java)
+            startActivity(intent)
         }
-        binding.btnBell.setOnClickListener {
-            Toast.makeText(requireContext(), "Abrir notificaciones", Toast.LENGTH_SHORT).show()
+
+        // Card 2: Tareas - Consultar tareas
+        binding.cardTasks.setOnClickListener {
+            val intent = Intent(requireContext(), TasksActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Card 3: Notas - Ver notas generales
+        binding.cardGrades.setOnClickListener {
+            val intent = Intent(requireContext(), GradesActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -11,36 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
-
-        <!-- Top bar -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageButton
-                android:id="@+id/btnSettings"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@android:drawable/ic_menu_manage"
-                android:contentDescription="@string/app_name" />
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageButton
-                android:id="@+id/btnBell"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:srcCompat="@android:drawable/ic_dialog_info"
-                android:contentDescription="@string/app_name" />
-        </LinearLayout>
-
         <!-- Perfil -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="12dp">
+                android:padding="12dp" android:background="@color/estudiante">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -114,14 +84,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tarea 1"
-                        android:textColor="#111418"
+                        android:textColor="@color/white"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Matemáticas"
-                        android:textColor="#617589"/>
+                        android:textColor="@color/white"/>
                 </LinearLayout>
 
                 <TextView
@@ -141,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="12dp">
+                android:padding="12dp" android:background="@color/estudiante">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -153,14 +123,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tarea 2"
-                        android:textColor="#111418"
+                        android:textColor="#FFF"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ciencias"
-                        android:textColor="#617589"/>
+                        android:textColor="#FFF"/>
                 </LinearLayout>
 
                 <TextView
@@ -180,7 +150,7 @@
             android:textSize="18sp"
             android:textColor="#111418"
             android:paddingTop="20dp"
-            android:paddingBottom="8dp"/>
+            android:paddingBottom="8dp" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -191,13 +161,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="12dp">
+                android:padding="12dp" android:background="@color/estudiante">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8.5"
-                    android:textColor="#111418"/>
+                    android:textColor="#FFF"/>
 
                 <Space
                     android:layout_width="0dp"
@@ -208,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Promedio"
-                    android:textColor="#111418"/>
+                    android:textColor="#FFF"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -224,16 +194,19 @@
             android:paddingBottom="8dp"/>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardCalendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="12dp">
+                android:padding="12dp" android:background="@color/estudiante">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -245,20 +218,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Calendario"
-                        android:textColor="#617589"/>
+                        android:textColor="#FFF"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Calendario Académico"
                         android:textStyle="bold"
-                        android:textColor="#111418"/>
+                        android:textColor="#FFF"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ver fechas importantes"
-                        android:textColor="#617589"/>
+                        android:textColor="#FFF"/>
                 </LinearLayout>
 
                 <ImageView
@@ -272,16 +245,19 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTasks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="12dp">
+                android:padding="12dp" android:background="@color/estudiante">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -293,20 +269,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tareas"
-                        android:textColor="#617589"/>
+                        android:textColor="#FFF"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Consultar Tareas"
                         android:textStyle="bold"
-                        android:textColor="#111418"/>
+                        android:textColor="#FFF"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ver tareas asignadas"
-                        android:textColor="#617589"/>
+                        android:textColor="#FFF"/>
                 </LinearLayout>
 
                 <ImageView
@@ -320,15 +296,18 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardGrades"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:padding="12dp">
+                android:padding="12dp" android:background="@color/estudiante">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -340,20 +319,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Notas"
-                        android:textColor="#617589"/>
+                        android:textColor="#FFF"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ver Notas Generales"
                         android:textStyle="bold"
-                        android:textColor="#111418"/>
+                        android:textColor="#FFF"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ver calificaciones"
-                        android:textColor="#617589"/>
+                        android:textColor="#FFF"/>
                 </LinearLayout>
 
                 <ImageView

@@ -12,13 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:paddingTop="@dimen/status_bar_height"
+
+        android:paddingTop="36dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="16dp"
+
+            >
 
             <!-- Botón de volver (izquierda) -->
             <ImageButton
@@ -62,8 +64,14 @@
             android:id="@+id/bottomNav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/purple_700"
             app:menu="@menu/menu_admin_bottom"
-            app:labelVisibilityMode="labeled"/>
+            app:labelVisibilityMode="labeled"
+            app:itemIconTint="@color/bottom_nav_selector"
+            app:itemTextColor="@color/bottom_nav_selector"
+            app:itemBackground="@drawable/bottom_nav_item_background"
+            app:itemRippleColor="@android:color/transparent"
+            app:itemActiveIndicatorStyle="@null"/>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

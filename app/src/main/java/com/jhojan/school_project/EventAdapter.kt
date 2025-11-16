@@ -15,7 +15,16 @@ class EventAdapter(
 
         fun bind(event: Event) {
             binding.tvEventTitle.text = event.titulo
-            binding.tvEventInfo.text = "${event.fecha} - ${event.lugar}"
+
+            // Mostrar información según el alcance
+            val info = when (event.alcance) {
+                "Colegio" -> "Alcance: Todo el colegio"
+                "Curso" -> "Alcance: Curso - ${event.curso_nombre}"
+                "Asignatura" -> "Alcance: Asignatura - ${event.asignatura_nombre}"
+                "Estudiante" -> "Alcance: Estudiante - ${event.estudiante_nombre}"
+                else -> "Alcance: ${event.alcance}"
+            }
+            binding.tvEventInfo.text = info
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(event)

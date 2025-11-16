@@ -15,7 +15,7 @@ class SubjectAdapter(
 
         fun bind(subject: Subject) {
             binding.tvSubjectName.text = subject.nombre
-            binding.tvSubjectInfo.text = "${subject.codigo} - ${subject.area}"
+            binding.tvSubjectInfo.text = "Código: ${subject.codigo} - Curso: ${subject.curso_nombre}"
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(subject)

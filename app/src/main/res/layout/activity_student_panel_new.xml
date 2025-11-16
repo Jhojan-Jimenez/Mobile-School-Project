@@ -28,8 +28,14 @@
             android:id="@+id/bottomNav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/estudiante"
             app:menu="@menu/menu_student_bottom"
-            app:labelVisibilityMode="labeled" />
+            app:labelVisibilityMode="labeled"
+            app:itemIconTint="@color/bottom_nav_selector_student"
+            app:itemTextColor="@color/bottom_nav_selector_student"
+            app:itemBackground="@drawable/bottom_nav_item_background_student"
+            app:itemRippleColor="@android:color/transparent"
+            app:itemActiveIndicatorStyle="@null"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
