@@ -91,7 +91,10 @@ class TeacherPanelActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
+        binding.rowReviewTasks.setOnClickListener {
+            val intent = Intent(this, RevisarTareaActivity::class.java)
+            startActivity(intent)
+        }
 
 
         // Logout
@@ -101,6 +104,6 @@ class TeacherPanelActivity : AppCompatActivity() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
-            }
         }
+    }
 }
