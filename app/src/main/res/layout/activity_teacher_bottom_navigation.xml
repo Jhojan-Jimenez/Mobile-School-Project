@@ -89,14 +89,14 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:src="@drawable/ic_book"
-            android:contentDescription="Asignaturas"
+            android:contentDescription="Asistencia"
             app:tint="@color/gray" />
 
         <TextView
             android:id="@+id/textAsignaturas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Asignaturas"
+            android:text="Asistencia"
             android:textSize="12sp"
             android:textColor="@color/gray"
             android:layout_marginTop="4dp" />

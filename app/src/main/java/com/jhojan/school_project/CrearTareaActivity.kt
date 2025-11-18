@@ -22,6 +22,7 @@ class CrearTareaActivity : AppCompatActivity() {
     // Views
     private lateinit var etTitulo: EditText
     private lateinit var etDescripcion: EditText
+    private lateinit var etLink: EditText
     private lateinit var tvFechaEntrega: TextView
     private lateinit var btnSeleccionarFecha: Button
     private lateinit var spinnerCursos: Spinner
@@ -75,6 +76,7 @@ class CrearTareaActivity : AppCompatActivity() {
         bottomNav = findViewById(R.id.bottomNav)
         etTitulo = findViewById(R.id.etTitulo)
         etDescripcion = findViewById(R.id.etDescripcion)
+        etLink = findViewById(R.id.etLink)
         tvFechaEntrega = findViewById(R.id.tvFechaEntrega)
         btnSeleccionarFecha = findViewById(R.id.btnSeleccionarFecha)
         spinnerCursos = findViewById(R.id.spinnerCursos)
@@ -262,6 +264,7 @@ class CrearTareaActivity : AppCompatActivity() {
     private fun validarYCrearTarea() {
         val titulo = etTitulo.text.toString().trim()
         val descripcion = etDescripcion.text.toString().trim()
+        val link = etLink.text.toString().trim()
         val posicionCurso = spinnerCursos.selectedItemPosition
         val posicionMateria = spinnerMaterias.selectedItemPosition
         val posicionEstudiante = spinnerEstudiantes.selectedItemPosition
@@ -309,9 +312,14 @@ class CrearTareaActivity : AppCompatActivity() {
             "materia" to materiaId,
             "profesor" to profesorId,
             "estudiante" to estudianteId,
-            "completada" to false,  // Nueva: Estado de completado
-            "nota" to 0  // Nueva: Nota inicial en 0
+            "completada" to false,
+            "nota" to 0
         )
+
+        // Agregar link solo si no está vacío
+        if (link.isNotEmpty()) {
+            tareaData["link"] = link
+        }
 
         // Deshabilitar botón mientras se guarda
         btnCrearTarea.isEnabled = false

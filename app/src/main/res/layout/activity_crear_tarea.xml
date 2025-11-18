@@ -149,7 +149,23 @@
                 android:layout_height="wrap_content"
                 android:padding="12dp"
                 android:background="@android:drawable/edit_text"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Link (Opcional) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="Link (opcional)"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textUri"
+                    android:maxLines="1"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!-- Botón Crear -->
             <Button

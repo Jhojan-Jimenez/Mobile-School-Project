@@ -270,43 +270,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Registrar Calificaciones -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/registerGradesCard"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginBottom="24dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Registrar Calificaciones"
-                        android:textColor="#424242"
-                        android:textSize="16sp" />
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow_right"
-                        app:tint="#9E9E9E" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
             <!-- Asistencia y Observaciones Section -->
             <TextView

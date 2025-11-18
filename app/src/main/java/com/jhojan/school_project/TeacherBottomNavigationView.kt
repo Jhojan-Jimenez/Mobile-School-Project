@@ -9,8 +9,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 // IMPORTS DE ACTIVITIES AÚN NO CREADAS — COMENTADOS
-// import com.jhojan.school_project.TareasActivity
-// import com.jhojan.school_project.AsignaturasActivity
+import com.jhojan.school_project.CrearTareaActivity
+import com.jhojan.school_project.AttendanceActivity
 // import com.jhojan.school_project.PerfilActivity
 // import com.jhojan.school_project.TeacherPanelActivity
 
@@ -21,7 +21,7 @@ class TeacherBottomNavigationView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     enum class NavigationItem {
-        INICIO, TAREAS, ASIGNATURAS, PERFIL
+        INICIO, TAREAS, ASISTENCIA, PERFIL
     }
 
     private var navInicio: LinearLayout
@@ -78,41 +78,33 @@ class TeacherBottomNavigationView @JvmOverloads constructor(
 
         navInicio.setOnClickListener {
             if (currentItem != NavigationItem.INICIO) {
-                /*
                 val intent = Intent(context, TeacherPanelActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
-                 */
             }
         }
 
         navTareas.setOnClickListener {
             if (currentItem != NavigationItem.TAREAS) {
-                /*
-                val intent = Intent(context, TareasActivity::class.java)
+                val intent = Intent(context, CrearTareaActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
-                 */
             }
         }
 
         navAsignaturas.setOnClickListener {
-            if (currentItem != NavigationItem.ASIGNATURAS) {
-                /*
-                val intent = Intent(context, AsignaturasActivity::class.java)
+            if (currentItem != NavigationItem.ASISTENCIA) {
+                val intent = Intent(context, AttendanceActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
-                 */
             }
         }
 
         navPerfil.setOnClickListener {
             if (currentItem != NavigationItem.PERFIL) {
-                /*
-                val intent = Intent(context, PerfilActivity::class.java)
+                val intent = Intent(context, PerfilProfesorActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
-                 */
             }
         }
     }
@@ -136,7 +128,7 @@ class TeacherBottomNavigationView @JvmOverloads constructor(
                 iconTareas.setColorFilter(colorAzul)
                 textTareas.setTextColor(colorAzul)
             }
-            NavigationItem.ASIGNATURAS -> {
+            NavigationItem.ASISTENCIA -> {
                 iconAsignaturas.setColorFilter(colorAzul)
                 textAsignaturas.setTextColor(colorAzul)
             }
@@ -174,8 +166,8 @@ class TeacherBottomNavigationView @JvmOverloads constructor(
         }
 
         navAsignaturas.setOnClickListener {
-            listener(NavigationItem.ASIGNATURAS)
-            setActiveItem(NavigationItem.ASIGNATURAS)
+            listener(NavigationItem.ASISTENCIA)
+            setActiveItem(NavigationItem.ASISTENCIA)
         }
 
         navPerfil.setOnClickListener {

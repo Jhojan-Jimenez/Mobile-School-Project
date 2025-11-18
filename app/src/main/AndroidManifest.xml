@@ -21,6 +21,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolProject">
         <activity
+            android:name=".PerfilProfesorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalendarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CrearMensajeEventoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CrearObservacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AttendanceAdapter.kt"
+            android:exported="false" />
+        <activity
+            android:name=".AttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalificarTareaActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SchoolProject" />
+        <activity
+            android:name=".RevisarTareasActivity"
+            android:exported="false" />
+        <activity
             android:name=".TeacherHeader"
             android:exported="false" />
         <activity

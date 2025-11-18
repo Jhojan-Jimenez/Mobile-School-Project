@@ -61,7 +61,6 @@ class TeacherPanelActivity : AppCompatActivity() {
 
         assignTasksCard = findViewById(R.id.assignTasksCard)
         reviewTasksCard = findViewById(R.id.reviewTasksCard)
-        registerGradesCard = findViewById(R.id.registerGradesCard)
         registerAttendanceCard = findViewById(R.id.registerAttendanceCard)
         notateObservationsCard = findViewById(R.id.notateObservationsCard)
         consultCalendarCard = findViewById(R.id.consultCalendarCard)
@@ -115,27 +114,24 @@ class TeacherPanelActivity : AppCompatActivity() {
         }
 
         reviewTasksCard.setOnClickListener {
-            // startActivity(Intent(this, ReviewTasksActivity::class.java))
+            startActivity(Intent(this, RevisarTareasActivity::class.java))
         }
 
-        registerGradesCard.setOnClickListener {
-            // startActivity(Intent(this, RegisterGradesActivity::class.java))
-        }
 
         registerAttendanceCard.setOnClickListener {
-            // startActivity(Intent(this, RegisterAttendanceActivity::class.java))
+            startActivity(Intent(this, AttendanceActivity::class.java))
         }
 
         notateObservationsCard.setOnClickListener {
-            // startActivity(Intent(this, NotateObservationsActivity::class.java))
+            startActivity(Intent(this, CrearObservacionActivity::class.java))
         }
 
         consultCalendarCard.setOnClickListener {
-            // startActivity(Intent(this, ConsultCalendarActivity::class.java))
+            startActivity(Intent(this, CalendarioActivity::class.java))
         }
 
         sendMessagesCard.setOnClickListener {
-            // startActivity(Intent(this, SendMessagesActivity::class.java))
+           startActivity(Intent(this, CrearMensajeEventoActivity::class.java))
         }
     }
 }
