@@ -1,5 +1,6 @@
 package com.jhojan.school_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +51,8 @@ class EventListFragment : Fragment() {
 
     private fun setupListeners() {
         binding.fabAddEvent.setOnClickListener {
-            Toast.makeText(requireContext(), "Agregar evento - Próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), CreateEventActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -65,9 +67,13 @@ class EventListFragment : Fragment() {
                     val event = Event(
                         id = document.id,
                         titulo = document.getString("titulo") ?: "",
-                        descripcion = document.getString("descripcion") ?: "",
-                        fecha = document.getString("fecha") ?: "",
-                        lugar = document.getString("lugar") ?: ""
+                        alcance = document.getString("alcance") ?: "",
+                        curso_id = document.getString("curso_id") ?: "",
+                        curso_nombre = document.getString("curso_nombre") ?: "",
+                        asignatura_id = document.getString("asignatura_id") ?: "",
+                        asignatura_nombre = document.getString("asignatura_nombre") ?: "",
+                        estudiante_id = document.getString("estudiante_id") ?: "",
+                        estudiante_nombre = document.getString("estudiante_nombre") ?: ""
                     )
                     events.add(event)
                 }

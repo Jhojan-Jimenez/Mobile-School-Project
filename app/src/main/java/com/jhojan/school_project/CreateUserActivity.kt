@@ -34,7 +34,8 @@ class CreateUserActivity : AppCompatActivity() {
 
     private fun setupRoleSpinner() {
         val roles = arrayOf("Seleccionar rol", "Estudiante", "Acudiente", "Profesor", "Administrativo")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, roles)
+        val adapter = ArrayAdapter(this, R.layout.spinner_item, roles)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         binding.spinnerRol.adapter = adapter
 
         binding.spinnerRol.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -58,11 +59,10 @@ class CreateUserActivity : AppCompatActivity() {
                 addTextField("grupo", "Grupo")
             }
             "Acudiente" -> {
-                addTextField("parentezco", "Parentezco")
+                addTextField("direccion", "Dirección")
             }
             "Profesor" -> {
-                addTextField("departamento", "Departamento")
-                addTextField("asignatura", "Asignatura")
+                addTextField("especialidad", "Especialidad")
             }
             "Administrativo" -> {
                 addTextField("cargo", "Cargo")
@@ -106,15 +106,13 @@ class CreateUserActivity : AppCompatActivity() {
 
     private fun createUser() {
         // Validar campos básicos
-        val nombre = binding.etNombre.text.toString().trim()
-        val apellido = binding.etApellido.text.toString().trim()
+        val nombreCompleto = binding.etNombreCompleto.text.toString().trim()
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
         val rol = binding.spinnerRol.selectedItem.toString()
         val telefono = binding.etTelefono.text.toString().trim()
-        val direccion = binding.etDireccion.text.toString().trim()
 
-        if (!validateBasicFields(nombre, apellido, email, password, rol, telefono, direccion)) {
+        if (!validateBasicFields(nombreCompleto, email, password, rol, telefono)) {
             return
         }
 
@@ -140,11 +138,11 @@ class CreateUserActivity : AppCompatActivity() {
                     // Crear documento en Firestore
                     val userData = hashMapOf(
                         "id" to uid,
-                        "nombre" to nombre,
-                        "apellido" to apellido,
+                        "nombre_completo" to nombreCompleto,
+                        "correo" to email,
                         "rol" to rol,
                         "telefono" to telefono,
-                        "Direccion" to direccion
+                        "activo" to true
                     )
 
                     // Agregar campos específicos del rol
@@ -190,32 +188,26 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     private fun validateBasicFields(
-        nombre: String,
-        apellido: String,
+        nombreCompleto: String,
         email: String,
         password: String,
         rol: String,
-        telefono: String,
-        direccion: String
+        telefono: String
     ): Boolean {
         var isValid = true
 
-        if (nombre.isEmpty()) {
-            binding.tilNombre.error = "El nombre es requerido"
+        if (nombreCompleto.isEmpty()) {
+            binding.tilNombreCompleto.error = "El nombre completo es requerido"
             isValid = false
         } else {
-            binding.tilNombre.error = null
-        }
-
-        if (apellido.isEmpty()) {
-            binding.tilApellido.error = "El apellido es requerido"
-            isValid = false
-        } else {
-            binding.tilApellido.error = null
+            binding.tilNombreCompleto.error = null
         }
 
         if (email.isEmpty()) {
             binding.tilEmail.error = "El correo es requerido"
+            isValid = false
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.tilEmail.error = "Formato de correo inválido"
             isValid = false
         } else {
             binding.tilEmail.error = null
@@ -241,13 +233,6 @@ class CreateUserActivity : AppCompatActivity() {
             isValid = false
         } else {
             binding.tilTelefono.error = null
-        }
-
-        if (direccion.isEmpty()) {
-            binding.tilDireccion.error = "La dirección es requerida"
-            isValid = false
-        } else {
-            binding.tilDireccion.error = null
         }
 
         return isValid

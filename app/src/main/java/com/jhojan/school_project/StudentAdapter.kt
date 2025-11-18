@@ -14,7 +14,7 @@ class StudentAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(student: Student) {
-            binding.tvStudentName.text = "${student.user.nombre} ${student.user.apellido}"
+            binding.tvStudentName.text = student.user.nombreCompleto
             binding.tvStudentInfo.text = "Grado ${student.grado} - Grupo ${student.grupo}"
 
             binding.btnEdit.setOnClickListener {

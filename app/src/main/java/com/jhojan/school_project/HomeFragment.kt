@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jhojan.school_project.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +28,76 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        db = FirebaseFirestore.getInstance()
+
         setupClickListeners()
+        loadDashboardData()
+    }
+
+    private fun loadDashboardData() {
+        loadStudentsCount()
+        loadTeachersCount()
+        loadGuardiansCount()
+        loadCoursesCount()
+        loadSubjectsCount()
+    }
+
+    private fun loadStudentsCount() {
+        db.collection("users")
+            .whereEqualTo("rol", "Estudiante")
+            .get()
+            .addOnSuccessListener { documents ->
+                binding.tvCountStudents.text = documents.size().toString()
+            }
+            .addOnFailureListener {
+                binding.tvCountStudents.text = "0"
+            }
+    }
+
+    private fun loadTeachersCount() {
+        db.collection("users")
+            .whereEqualTo("rol", "Profesor")
+            .get()
+            .addOnSuccessListener { documents ->
+                binding.tvCountTeachers.text = documents.size().toString()
+            }
+            .addOnFailureListener {
+                binding.tvCountTeachers.text = "0"
+            }
+    }
+
+    private fun loadGuardiansCount() {
+        db.collection("users")
+            .whereEqualTo("rol", "Acudiente")
+            .get()
+            .addOnSuccessListener { documents ->
+                binding.tvCountGuardians.text = documents.size().toString()
+            }
+            .addOnFailureListener {
+                binding.tvCountGuardians.text = "0"
+            }
+    }
+
+    private fun loadCoursesCount() {
+        db.collection("courses")
+            .get()
+            .addOnSuccessListener { documents ->
+                binding.tvCountCourses.text = documents.size().toString()
+            }
+            .addOnFailureListener {
+                binding.tvCountCourses.text = "0"
+            }
+    }
+
+    private fun loadSubjectsCount() {
+        db.collection("subjects")
+            .get()
+            .addOnSuccessListener { documents ->
+                binding.tvCountSubjects.text = documents.size().toString()
+            }
+            .addOnFailureListener {
+                binding.tvCountSubjects.text = "0"
+            }
     }
 
     private fun setupClickListeners() {
@@ -81,14 +152,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.nav_asignaturas)
         }
 
-        // Configuración Académica - click listeners
-        binding.cardPeriodos.setOnClickListener {
-            Toast.makeText(requireContext(), "Periodos Académicos - Próximamente", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.cardEscalas.setOnClickListener {
-            Toast.makeText(requireContext(), "Escalas de Calificación - Próximamente", Toast.LENGTH_SHORT).show()
-        }
 
         binding.cardCalendario.setOnClickListener {
             findNavController().navigate(R.id.nav_eventos)
@@ -98,6 +161,11 @@ class HomeFragment : Fragment() {
         binding.cardReportes.setOnClickListener {
             Toast.makeText(requireContext(), "Generar Reportes - Próximamente", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadDashboardData()
     }
 
     override fun onDestroyView() {

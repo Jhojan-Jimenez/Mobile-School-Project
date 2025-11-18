@@ -1,5 +1,6 @@
 package com.jhojan.school_project
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +51,8 @@ class NewsListFragment : Fragment() {
 
     private fun setupListeners() {
         binding.fabAddNews.setOnClickListener {
-            Toast.makeText(requireContext(), "Agregar noticia - Próximamente", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), CreateNewsActivity::class.java)
+            startActivity(intent)
         }
     }
 

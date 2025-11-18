@@ -14,8 +14,11 @@ class TeacherAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(teacher: Teacher) {
-            binding.tvTeacherName.text = "${teacher.user.nombre} ${teacher.user.apellido}"
-            binding.tvTeacherInfo.text = "${teacher.departamento} - ${teacher.asignatura}"
+            binding.tvTeacherName.text = teacher.user.nombreCompleto
+            // Usar especialidad si está disponible, sino usar departamento-asignatura (legacy)
+            binding.tvTeacherInfo.text = teacher.especialidad.ifEmpty {
+                "${teacher.departamento} - ${teacher.asignatura}"
+            }
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(teacher)

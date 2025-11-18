@@ -14,8 +14,8 @@ class GuardianAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(guardian: Guardian) {
-            binding.tvGuardianName.text = "${guardian.user.nombre} ${guardian.user.apellido}"
-            binding.tvGuardianInfo.text = guardian.parentesco
+            binding.tvGuardianName.text = guardian.user.nombreCompleto
+            binding.tvGuardianInfo.text = guardian.direccion.ifEmpty { guardian.parentesco }
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(guardian)

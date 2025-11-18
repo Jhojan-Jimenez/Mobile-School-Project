@@ -60,7 +60,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -72,7 +73,7 @@
                         android:id="@+id/tvCountStudents"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="500"
+                        android:text="0"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:textColor="#111418"/>
@@ -95,7 +96,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -107,7 +110,7 @@
                         android:id="@+id/tvCountTeachers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="30"
+                        android:text="0"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:textColor="#111418"/>
@@ -130,7 +133,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical" android:layout_marginLeft="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -142,7 +145,7 @@
                         android:id="@+id/tvCountGuardians"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="450"
+                        android:text="0"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:textColor="#111418"/>
@@ -165,7 +168,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical" android:layout_marginLeft="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -177,7 +180,7 @@
                         android:id="@+id/tvCountCourses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="15"
+                        android:text="0"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:textColor="#111418"/>
@@ -200,7 +203,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical" android:layout_marginLeft="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -212,7 +215,7 @@
                         android:id="@+id/tvCountSubjects"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100"
+                        android:text="0"
                         android:textStyle="bold"
                         android:textSize="20sp"
                         android:textColor="#111418"/>
@@ -300,19 +303,6 @@
             android:padding="16dp"
             app:columnCount="2">
 
-            <LinearLayout android:id="@+id/cardPeriodos" style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage" android:src="@android:drawable/ic_menu_month"/>
-                </FrameLayout>
-                <TextView style="@style/RowTitle" android:text="Periodos Académicos"/>
-            </LinearLayout>
-
-            <LinearLayout android:id="@+id/cardEscalas" style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage" android:src="@android:drawable/ic_menu_sort_by_size"/>
-                </FrameLayout>
-                <TextView style="@style/RowTitle" android:text="Escalas de Calificación"/>
-            </LinearLayout>
 
             <LinearLayout android:id="@+id/cardCalendario" style="@style/GridCard" app:layout_columnWeight="1" android:layout_margin="6dp">
                 <FrameLayout style="@style/RowIconContainer">

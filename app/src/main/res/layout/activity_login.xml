@@ -83,8 +83,10 @@
                 android:text="Iniciar sesión"
                 android:padding="16dp"
                 android:textSize="16sp"
+                android:textColor="@color/white"
+                android:backgroundTint="#1280ED"
                 android:background="@drawable/bg_button_rounded"
-                android:backgroundTint="@color/general"
+
                 app:layout_constraintTop_toBottomOf="@id/tilPassword"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

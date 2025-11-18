@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.jhojan.school_project.StudentHomeFragment"
+        android:name="com.jhojan.school_project.StudentProfileFragment"
         android:label="Perfil" />
 
     <fragment
