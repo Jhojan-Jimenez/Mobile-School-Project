@@ -1,4 +1,4 @@
-package com.jhojan.school_project.components
+package com.jhojan.school_project
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,12 +7,8 @@ import android.widget.LinearLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jhojan.school_project.R
-import de.hdodenhof.circleimageview.CircleImageView
 
 class TeacherHeader @JvmOverloads constructor(
     context: Context,
@@ -21,17 +17,17 @@ class TeacherHeader @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private var ivBackArrow: ImageView
-    private var ivTeacherPhoto: CircleImageView
+    private var imgTeacher: ImageView
     private var tvTeacherName: TextView
     private var tvTeacherRole: TextView
 
     private var onBackClickListener: (() -> Unit)? = null
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.teacher_header, this, true)
+        LayoutInflater.from(context).inflate(R.layout.activity_teacher_header, this, true)
 
         ivBackArrow = findViewById(R.id.ivBackArrow)
-        ivTeacherPhoto = findViewById(R.id.ivTeacherPhoto)
+        imgTeacher = findViewById(R.id.imgTeacher)
         tvTeacherName = findViewById(R.id.tvTeacherName)
         tvTeacherRole = findViewById(R.id.tvTeacherRole)
 
@@ -42,38 +38,45 @@ class TeacherHeader @JvmOverloads constructor(
     }
 
     /**
-     * Configura el header con los datos del profesor desde Firebase
-     * @param profesorId ID del profesor en Firebase (ej: "prof_001")
+     * Configura el header con los datos del profesor desde Firestore
+     * @param profesorId ID del profesor en Firestore (ej: "prof_001")
      */
     fun loadTeacherData(profesorId: String) {
-        val database = FirebaseDatabase.getInstance()
-        val profesorRef = database.getReference("profesores/$profesorId")
+        val db = FirebaseFirestore.getInstance()
 
-        profesorRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val nombre = snapshot.child("nombre").getValue(String::class.java) ?: "Profesor"
-                val fotoUrl = snapshot.child("foto_perfil").getValue(String::class.java)
+        db.collection("profesores")
+            .whereEqualTo("id", profesorId)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val profesor = documents.documents[0]
+                    val nombre = profesor.getString("nombre") ?: "Profesor"
+                    val fotoUrl = profesor.getString("foto_perfil")
 
-                tvTeacherName.text = nombre
+                    tvTeacherName.text = nombre
 
-                // Cargar imagen si existe URL, sino usar imagen por defecto
-                if (!fotoUrl.isNullOrEmpty()) {
-                    Glide.with(context)
-                        .load(fotoUrl)
-                        .placeholder(R.drawable.default_teacher_avatar)
-                        .error(R.drawable.default_teacher_avatar)
-                        .into(ivTeacherPhoto)
+                    // Cargar imagen si existe URL, sino usar imagen por defecto
+                    if (!fotoUrl.isNullOrEmpty()) {
+                        Glide.with(context)
+                            .load(fotoUrl)
+                            .placeholder(R.drawable.default_teacher_avatar)
+                            .error(R.drawable.default_teacher_avatar)
+                            .circleCrop()
+                            .into(imgTeacher)
+                    } else {
+                        imgTeacher.setImageResource(R.drawable.default_teacher_avatar)
+                    }
                 } else {
-                    ivTeacherPhoto.setImageResource(R.drawable.default_teacher_avatar)
+                    // No se encontró el profesor
+                    tvTeacherName.text = "Profesor"
+                    imgTeacher.setImageResource(R.drawable.default_teacher_avatar)
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Mantener valores por defecto en caso de error
+            .addOnFailureListener { error ->
+                // Error al cargar datos
                 tvTeacherName.text = "Profesor"
-                ivTeacherPhoto.setImageResource(R.drawable.default_teacher_avatar)
+                imgTeacher.setImageResource(R.drawable.default_teacher_avatar)
             }
-        })
     }
 
     /**
@@ -89,9 +92,10 @@ class TeacherHeader @JvmOverloads constructor(
                 .load(fotoUrl)
                 .placeholder(R.drawable.default_teacher_avatar)
                 .error(R.drawable.default_teacher_avatar)
-                .into(ivTeacherPhoto)
+                .circleCrop()
+                .into(imgTeacher)
         } else {
-            ivTeacherPhoto.setImageResource(R.drawable.default_teacher_avatar)
+            imgTeacher.setImageResource(R.drawable.default_teacher_avatar)
         }
     }
 

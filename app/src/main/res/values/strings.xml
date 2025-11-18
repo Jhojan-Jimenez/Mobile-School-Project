@@ -5,4 +5,5 @@
     <string name="perfil">Perfil</string>
     <string name="soporte">Soporte</string>
     <string name="notificaciones">Notificaciones</string>
+    <string name="back_button">back_button</string>
 </resources>

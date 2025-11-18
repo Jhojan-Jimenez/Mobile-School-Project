@@ -8,9 +8,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.tuapp.activities.TareasActivity
-import com.tuapp.activities.AsignaturasActivity
-import com.tuapp.activities.PerfilActivity
+// IMPORTS DE ACTIVITIES AÚN NO CREADAS — COMENTADOS
+// import com.jhojan.school_project.TareasActivity
+// import com.jhojan.school_project.AsignaturasActivity
+// import com.jhojan.school_project.PerfilActivity
+// import com.jhojan.school_project.TeacherPanelActivity
 
 class TeacherBottomNavigationView @JvmOverloads constructor(
     context: Context,
@@ -43,7 +45,8 @@ class TeacherBottomNavigationView @JvmOverloads constructor(
     private val colorGris: Int
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.activity_teacher_bottom_navigation, this, true)
+        LayoutInflater.from(context)
+            .inflate(R.layout.activity_teacher_bottom_navigation, this, true)
 
         // Inicializar colores
         colorAzul = ContextCompat.getColor(context, R.color.azul)
@@ -69,35 +72,47 @@ class TeacherBottomNavigationView @JvmOverloads constructor(
     }
 
     private fun setupClickListeners() {
+        // 🔵 NOTA:
+        // Como aún NO has creado las Activities, las líneas con Intent están comentadas.
+        // Cuando las crees, descomenta cada bloque completo.
+
         navInicio.setOnClickListener {
             if (currentItem != NavigationItem.INICIO) {
+                /*
                 val intent = Intent(context, TeacherPanelActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
+                 */
             }
         }
 
         navTareas.setOnClickListener {
             if (currentItem != NavigationItem.TAREAS) {
+                /*
                 val intent = Intent(context, TareasActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
+                 */
             }
         }
 
         navAsignaturas.setOnClickListener {
             if (currentItem != NavigationItem.ASIGNATURAS) {
+                /*
                 val intent = Intent(context, AsignaturasActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
+                 */
             }
         }
 
         navPerfil.setOnClickListener {
             if (currentItem != NavigationItem.PERFIL) {
+                /*
                 val intent = Intent(context, PerfilActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 context.startActivity(intent)
+                 */
             }
         }
     }
@@ -108,7 +123,7 @@ class TeacherBottomNavigationView @JvmOverloads constructor(
     fun setActiveItem(item: NavigationItem) {
         currentItem = item
 
-        // Resetear todos los ítems a gris
+        // Resetear todos los ítems
         resetAllItems()
 
         // Activar el ítem seleccionado
@@ -145,7 +160,7 @@ class TeacherBottomNavigationView @JvmOverloads constructor(
     }
 
     /**
-     * Listener opcional para capturar eventos de navegación personalizados
+     * Listener para navegación opcional
      */
     fun setOnNavigationItemSelectedListener(listener: (NavigationItem) -> Unit) {
         navInicio.setOnClickListener {

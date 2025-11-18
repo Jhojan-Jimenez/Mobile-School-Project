@@ -6,12 +6,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.jhojan.school_project.TeacherHeader
+import com.jhojan.school_project.TeacherBottomNavigationView
 
 class TeacherPanelActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
+    private lateinit var db: FirebaseFirestore
 
     private lateinit var teacherNameText: TextView
     private lateinit var subjectsCountText: TextView
@@ -26,12 +28,15 @@ class TeacherPanelActivity : AppCompatActivity() {
     private lateinit var consultCalendarCard: CardView
     private lateinit var sendMessagesCard: CardView
 
+    private lateinit var header: TeacherHeader
+    private lateinit var bottomNav: TeacherBottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_panel)
 
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance().reference
+        db = FirebaseFirestore.getInstance()
 
         initializeViews()
         loadTeacherData()
@@ -39,6 +44,16 @@ class TeacherPanelActivity : AppCompatActivity() {
     }
 
     private fun initializeViews() {
+        // Header
+        header = findViewById(R.id.teacherHeader)
+
+        // Footer
+        bottomNav = findViewById(R.id.bottomNavT)
+        bottomNav.setActiveItem(TeacherBottomNavigationView.NavigationItem.INICIO)
+
+        // Header eventos
+        header.setOnBackClickListener { finish() }
+
         teacherNameText = findViewById(R.id.teacherNameText)
         subjectsCountText = findViewById(R.id.subjectsCountText)
         pendingCountText = findViewById(R.id.pendingCountText)
@@ -54,77 +69,72 @@ class TeacherPanelActivity : AppCompatActivity() {
     }
 
     private fun loadTeacherData() {
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            // Redirect to login if not authenticated
-            finish()
-            return
-        }
+        val currentUser = auth.currentUser ?: return finish()
 
         val teacherId = currentUser.uid
-        val teacherRef = database.child("profesores").child(teacherId)
 
-        teacherRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val teacherName = snapshot.child("nombre").getValue(String::class.java) ?: "Profesor"
-                teacherNameText.text = "Hola, $teacherName"
+        // Cargar header usando tu componente propio
+        header.loadTeacherData(teacherId)
 
-                // Count subjects (materias)
-                val materiasCount = snapshot.child("materias").childrenCount.toInt()
-                subjectsCountText.text = materiasCount.toString()
+        // Firestore: profesores/{teacherId}
+        db.collection("profesores")
+            .document(teacherId)
+            .get()
+            .addOnSuccessListener { document ->
 
-                // Count pending tasks
-                var pendingCount = 0
-                snapshot.child("materias").children.forEach { materia ->
-                    val pendientes = materia.child("pendientes").getValue(Int::class.java) ?: 0
-                    pendingCount += pendientes
+                if (document != null && document.exists()) {
+
+                    // Nombre
+                    val teacherName = document.getString("nombre") ?: "Profesor"
+                    teacherNameText.text = "Hola, $teacherName"
+
+                    // materias: lista dentro del documento
+                    val materias = document.get("materias") as? List<Map<String, Any>> ?: emptyList()
+                    subjectsCountText.text = materias.size.toString()
+
+                    // Suma total de pendientes
+                    val totalPendientes = materias.sumOf {
+                        (it["pendientes"] as? Long ?: 0L)
+                    }
+                    pendingCountText.text = totalPendientes.toString()
+
+                    // Total estudiantes
+                    val estudiantes = document.getLong("cantidad_estudiantes") ?: 0
+                    studentsCountText.text = estudiantes.toString()
                 }
-                pendingCountText.text = pendingCount.toString()
-
-                // Count total students
-                val cantidadEstudiantes = snapshot.child("cantidad_estudiantes").getValue(Int::class.java) ?: 0
-                studentsCountText.text = cantidadEstudiantes.toString()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Handle error
+            .addOnFailureListener {
+                // manejo de errores opcional
             }
-        })
     }
 
     private fun setupClickListeners() {
+
         assignTasksCard.setOnClickListener {
-            // TODO: Navigate to AssignTasksActivity
-            // startActivity(Intent(this, AssignTasksActivity::class.java))
+            startActivity(Intent(this, CrearTareaActivity::class.java))
         }
 
         reviewTasksCard.setOnClickListener {
-            // TODO: Navigate to ReviewTasksActivity
             // startActivity(Intent(this, ReviewTasksActivity::class.java))
         }
 
         registerGradesCard.setOnClickListener {
-            // TODO: Navigate to RegisterGradesActivity
             // startActivity(Intent(this, RegisterGradesActivity::class.java))
         }
 
         registerAttendanceCard.setOnClickListener {
-            // TODO: Navigate to RegisterAttendanceActivity
             // startActivity(Intent(this, RegisterAttendanceActivity::class.java))
         }
 
         notateObservationsCard.setOnClickListener {
-            // TODO: Navigate to NotateObservationsActivity
             // startActivity(Intent(this, NotateObservationsActivity::class.java))
         }
 
         consultCalendarCard.setOnClickListener {
-            // TODO: Navigate to ConsultCalendarActivity
             // startActivity(Intent(this, ConsultCalendarActivity::class.java))
         }
 
         sendMessagesCard.setOnClickListener {
-            // TODO: Navigate to SendMessagesActivity
             // startActivity(Intent(this, SendMessagesActivity::class.java))
         }
     }

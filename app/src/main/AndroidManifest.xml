@@ -30,7 +30,7 @@
             android:name=".RevisarTareaActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityCrearTarea"
+            android:name=".CrearTareaActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
