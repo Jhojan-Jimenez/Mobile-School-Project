@@ -58,13 +58,25 @@
             android:name=".CreateSubjectActivity"
             android:exported="false" />
         <activity
+            android:name=".EditSubjectActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreateEventActivity"
             android:exported="false" />
         <activity
             android:name=".CreateNewsActivity"
             android:exported="false" />
         <activity
+            android:name=".EditNewsActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditStudentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditGuardianActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditTeacherActivity"
             android:exported="false" />
         <activity
             android:name=".CalendarActivity"

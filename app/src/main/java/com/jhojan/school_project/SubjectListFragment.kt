@@ -40,7 +40,9 @@ class SubjectListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = SubjectAdapter(subjects) { subject ->
-            Toast.makeText(requireContext(), "Editar: ${subject.nombre}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), EditSubjectActivity::class.java)
+            intent.putExtra("SUBJECT_ID", subject.id)
+            startActivity(intent)
         }
 
         binding.recyclerViewSubjects.apply {

@@ -40,8 +40,9 @@ class TeacherListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = TeacherAdapter(teachers) { teacher ->
-            // Handle edit click
-            Toast.makeText(requireContext(), "Editar: ${teacher.user.nombre}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), EditTeacherActivity::class.java)
+            intent.putExtra("USER_ID", teacher.user.id)
+            startActivity(intent)
         }
 
         binding.recyclerViewTeachers.apply {

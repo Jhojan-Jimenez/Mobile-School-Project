@@ -40,8 +40,9 @@ class GuardianListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = GuardianAdapter(guardians) { guardian ->
-            // Handle edit click
-            Toast.makeText(requireContext(), "Editar: ${guardian.user.nombre}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), EditGuardianActivity::class.java)
+            intent.putExtra("USER_ID", guardian.user.id)
+            startActivity(intent)
         }
 
         binding.recyclerViewGuardians.apply {

@@ -40,7 +40,9 @@ class NewsListFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = NewsAdapter(newsList) { news ->
-            Toast.makeText(requireContext(), "Editar: ${news.titulo}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), EditNewsActivity::class.java)
+            intent.putExtra("NEWS_ID", news.id)
+            startActivity(intent)
         }
 
         binding.recyclerViewNews.apply {
