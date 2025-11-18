@@ -21,10 +21,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolProject">
         <activity
+            android:name=".PerfilProfesorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalendarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CrearMensajeEventoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CrearObservacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AttendanceAdapter.kt"
+            android:exported="false" />
+        <activity
+            android:name=".AttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalificarTareaActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SchoolProject" />
+        <activity
+            android:name=".RevisarTareasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherHeader"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherBottomNavigationView"
+            android:exported="false" />
+        <activity
             android:name=".RevisarTareaActivity"
             android:exported="false" />
         <activity
-            android:name=".ActivityCrearTarea"
+            android:name=".CrearTareaActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -117,11 +148,9 @@
         <activity
             android:name=".ClasesProfesorActivity"
             android:exported="false" />
-
         <activity
             android:name=".AsistenciaActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="false" />

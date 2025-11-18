@@ -17,6 +17,12 @@
     <color name="blue_primary">#2196F3</color> <!-- Azul Material -->
     <color name="blue_dark">#1976D2</color>
     <color name="blue_light">#BBDEFB</color>
+    <!-- Color azul para el ítem activo -->
+    <color name="azul">#2196F3</color>
+
+    <!-- Color gris para ítems inactivos -->
+    <color name="gray">#757575</color>
+
 
     <color name="primary">#136DEC</color>
     <color name="primary_dark">#0D4FB8</color>

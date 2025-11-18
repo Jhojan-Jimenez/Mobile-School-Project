@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:background="@color/white"
+    android:elevation="4dp"
+    android:gravity="center_vertical">
+
+    <!-- Flecha de regreso a la izquierda -->
+    <ImageView
+        android:id="@+id/ivBackArrow"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="@string/back_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginEnd="16dp"/>
+
+    <!-- Foto de perfil del profesor -->
+    <ImageView
+        android:id="@+id/imgTeacher"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_teacher_avatar"
+        android:background="@drawable/circle_mask"
+        android:clipToOutline="true" />
+
+
+    <!-- Contenedor del nombre y rol -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+
+        <TextView
+            android:id="@+id/tvTeacherName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Carlos Martínez"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvTeacherRole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Docente"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+</LinearLayout>

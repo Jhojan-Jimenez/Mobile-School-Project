@@ -1,439 +1,458 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="#F5F5F5">
 
-    <!-- AppBar con Toolbar -->
-    <com.google.android.material.appbar.AppBarLayout
+    <!-- HEADER -->
+    <com.jhojan.school_project.TeacherHeader
+        android:id="@+id/teacherHeader"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            style="@style/Widget.Material3.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:titleCentered="true"
-            app:title="Carlos G. - Docente"
-            app:navigationIcon="@android:drawable/ic_menu_manage"/>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!-- Contenido scrollable -->
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <!-- TU SCROLLVIEW ORIGINAL -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/teacherHeader"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavT"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#F5F5F5">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- Cabecera tipo HTML: engranaje - título - campana -->
-
-            <!-- Hero -->
-            <FrameLayout
+            <!-- Teacher Header Card -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="16dp"
-                android:background="@drawable/bg_card_rounded">
-
-                <ImageView
-                    android:id="@+id/imgHero"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@android:color/darker_gray"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/overlay_gradient_bottom"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="bottom"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/default_teacher_panel"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="24dp">
 
                     <TextView
-                        android:id="@+id/tvUserName"
-                        android:layout_width="match_parent"
+                        android:id="@+id/teacherNameText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Hola, Carlos"
-                        android:textColor="@android:color/white"
-                        android:textStyle="bold"
-                        android:textSize="20sp"/>
+                        android:textColor="#FFFFFF"
+                        android:textSize="28sp"
+                        android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tvSubtitle"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Actualmente enseñas 5 asignaturas y tienes 2 tareas pendientes por calificar"
-                        android:textColor="@android:color/white"
+                        android:layout_marginTop="8dp"
+                        android:text="Actualmente enseñas 5 asignaturas y\ntienes 2 tareas pendientes por calificar."
+                        android:textColor="#FFFFFF"
                         android:textSize="14sp"
-                        android:paddingTop="4dp"/>
+                        android:lineSpacingExtra="4dp" />
+
                 </LinearLayout>
-            </FrameLayout>
 
-            <!-- Resumen -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Resumen"
-                android:textColor="#111418"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="4dp"/>
+            </androidx.cardview.widget.CardView>
 
+            <!-- Statistics Cards Row -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:weightSum="3">
 
-                <!-- Card 1 -->
-                <LinearLayout
+                <!-- Asignaturas Card -->
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/bg_card_rounded_border"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    app:cardBackgroundColor="#E3F2FD"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Asignaturas"
-                        android:textColor="#111418"
-                        android:textSize="14sp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dp">
 
-                    <TextView
-                        android:id="@+id/tvSubjects"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5"
-                        android:textColor="#111418"
-                        android:textStyle="bold"
-                        android:textSize="20sp"/>
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/subjectsCountText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5"
+                            android:textColor="#1976D2"
+                            android:textSize="36sp"
+                            android:textStyle="bold" />
 
-                <!-- Card 2 -->
-                <LinearLayout
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Asignaturas"
+                            android:textColor="#424242"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Pendientes Card -->
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_weight="1"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/bg_card_rounded_border"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    app:cardBackgroundColor="#E3F2FD"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tareas Pendientes"
-                        android:textColor="#111418"
-                        android:textSize="14sp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dp">
 
-                    <TextView
-                        android:id="@+id/tvPendingTasks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2"
-                        android:textColor="#111418"
-                        android:textStyle="bold"
-                        android:textSize="20sp"/>
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/pendingCountText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2"
+                            android:textColor="#1976D2"
+                            android:textSize="36sp"
+                            android:textStyle="bold" />
 
-                <!-- Card 3 -->
-                <LinearLayout
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pendientes"
+                            android:textColor="#424242"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Estudiantes Card -->
+                <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_card_rounded_border"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    app:cardBackgroundColor="#E3F2FD"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Estudiantes"
-                        android:textColor="#111418"
-                        android:textSize="14sp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dp">
 
-                    <TextView
-                        android:id="@+id/tvStudents"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="120"
-                        android:textColor="#111418"
-                        android:textStyle="bold"
-                        android:textSize="20sp"/>
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/studentsCountText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="120"
+                            android:textColor="#1976D2"
+                            android:textSize="36sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Estudiantes"
+                            android:textColor="#424242"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
-            <!-- Gestión Académica -->
+            <!-- Gestión Académica Section -->
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:text="Gestión Académica"
-                android:textColor="#111418"
-                android:textStyle="bold"
+                android:textColor="#212121"
                 android:textSize="18sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="4dp"/>
+                android:textStyle="bold" />
 
-            <!-- Filas (estilo en styles_components.xml) -->
-            <LinearLayout
-                android:id="@+id/rowAssignTasks"
-                style="@style/RowItemStyle">
-
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_input_add"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Asignar Tareas"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rowReviewTasks"
-                style="@style/RowItemStyle">
-
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_menu_agenda"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Revisar Tareas"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rowRegisterGrades"
-                style="@style/RowItemStyle">
-
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_menu_edit"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Registrar Calificaciones"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rowViewGrades"
-                style="@style/RowItemStyle">
-
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_menu_sort_by_size"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Ver Calificaciones Registradas"/>
-            </LinearLayout>
-
-            <!-- Asistencia y Observaciones -->
-            <TextView
+            <!-- Asignar Tareas -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/assignTasksCard"
                 android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Asignar Tareas"
+                        android:textColor="#424242"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="#9E9E9E" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Revisar Tareas -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/reviewTasksCard"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Revisar Tareas"
+                        android:textColor="#424242"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="#9E9E9E" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Asistencia y Observaciones Section -->
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:text="Asistencia y Observaciones"
-                android:textColor="#111418"
-                android:textStyle="bold"
+                android:textColor="#212121"
                 android:textSize="18sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="4dp"/>
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/rowRegisterAttendance"
-                style="@style/RowItemStyle">
+            <!-- Registrar Asistencia -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/registerAttendanceCard"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
 
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_menu_month"/>
-                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
-                <TextView style="@style/RowTitle"
-                    android:text="Registrar Asistencia"/>
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Registrar Asistencia"
+                        android:textColor="#424242"
+                        android:textSize="16sp" />
 
-            <LinearLayout
-                android:id="@+id/rowAttendanceHistory"
-                style="@style/RowItemStyle">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="#9E9E9E" />
 
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_menu_recent_history"/>
-                </FrameLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                <TextView style="@style/RowTitle"
-                    android:text="Consultar Historial de Asistencia"/>
-            </LinearLayout>
+            <!-- Anotar Observaciones -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/notateObservationsCard"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
 
-            <LinearLayout
-                android:id="@+id/rowAddObservations"
-                style="@style/RowItemStyle">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_menu_info_details"/>
-                </FrameLayout>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Anotar Observaciones"
+                        android:textColor="#424242"
+                        android:textSize="16sp" />
 
-                <TextView style="@style/RowTitle"
-                    android:text="Ingresar Observaciones Disciplinarias"/>
-            </LinearLayout>
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="#9E9E9E" />
 
-            <LinearLayout
-                android:id="@+id/rowObservationsHistory"
-                style="@style/RowItemStyle">
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_menu_search"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Consultar Historial de Observaciones"/>
-            </LinearLayout>
-
-            <!-- Comunicación y Calendario -->
+            <!-- Comunicación y Calendario Section -->
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
                 android:text="Comunicación y Calendario"
-                android:textColor="#111418"
-                android:textStyle="bold"
+                android:textColor="#212121"
                 android:textSize="18sp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="4dp"/>
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:id="@+id/rowViewCalendar"
-                style="@style/RowItemStyle">
-
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_menu_month"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Consultar Calendario Académico"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rowProposeCalendar"
-                style="@style/RowItemStyle">
-
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_input_add"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Proponer Actividades en Calendario"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rowWriteMessage"
-                style="@style/RowItemStyle">
-
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_dialog_email"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Redactar Comunicación"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/rowSendNotification"
-                style="@style/RowItemStyle">
-
-                <FrameLayout style="@style/RowIconContainer">
-                    <ImageView style="@style/RowIconImage"
-                        android:src="@android:drawable/ic_popup_reminder"/>
-                </FrameLayout>
-
-                <TextView style="@style/RowTitle"
-                    android:text="Mandar Notificación"/>
-            </LinearLayout>
-
-            <!-- Botón Cerrar sesión -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogout"
+            <!-- Consultar Calendario Académico -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/consultCalendarCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Cerrar sesión"/>
+                android:layout_height="56dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
 
-            <!-- espacio para que no tape el BottomNav -->
-            <Space
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Consultar Calendario Académico"
+                        android:textColor="#424242"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="#9E9E9E" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Enviar Mensajes a Estudiantes -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/sendMessagesCard"
                 android:layout_width="match_parent"
-                android:layout_height="84dp"/>
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Enviar Mensajes a Estudiantes"
+                        android:textColor="#424242"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:tint="#9E9E9E" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Navigation -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
+    </ScrollView>
+
+    <!-- FOOTER (ID CORREGIDO) -->
+    <com.jhojan.school_project.TeacherBottomNavigationView
+        android:id="@+id/bottomNavT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:menu="@menu/menu_teacher_bottom"
-        app:labelVisibilityMode="labeled"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingTop="12dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="4dp"
-        app:layout_anchor="@+id/scroll"
-        app:layout_anchorGravity="top|center">
-
-        <ImageView
-            android:id="@+id/btnSettings"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_manage" />
-
-        <TextView
-            android:id="@+id/tvHeaderTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Carlos G. - Docente"
-            android:textColor="#111418"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/btnNotifications"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_popup_reminder" />
-    </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
