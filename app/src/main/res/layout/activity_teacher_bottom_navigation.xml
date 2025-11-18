@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomNavigationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@android:color/white"
+    android:elevation="8dp"
+    android:paddingVertical="12dp">
+
+    <!-- Inicio -->
+    <LinearLayout
+        android:id="@+id/navInicio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:id="@+id/iconInicio"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_home"
+            android:contentDescription="Inicio"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/textInicio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inicio"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Tareas -->
+    <LinearLayout
+        android:id="@+id/navTareas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:id="@+id/iconTareas"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_tasks"
+            android:contentDescription="Tareas"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/textTareas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tareas"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Asignaturas -->
+    <LinearLayout
+        android:id="@+id/navAsignaturas"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:id="@+id/iconAsignaturas"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_book"
+            android:contentDescription="Asignaturas"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/textAsignaturas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asignaturas"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Perfil -->
+    <LinearLayout
+        android:id="@+id/navPerfil"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <ImageView
+            android:id="@+id/iconPerfil"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_profile"
+            android:contentDescription="Perfil"
+            app:tint="@color/gray" />
+
+        <TextView
+            android:id="@+id/textPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perfil"
+            android:textSize="12sp"
+            android:textColor="@color/gray"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+</LinearLayout>

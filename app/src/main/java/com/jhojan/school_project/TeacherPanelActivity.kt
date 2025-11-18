@@ -2,108 +2,130 @@ package com.jhojan.school_project
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
+import androidx.cardview.widget.CardView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.jhojan.school_project.databinding.ActivityTeacherPanelBinding
+import com.google.firebase.database.DatabaseReference
 
 class TeacherPanelActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTeacherPanelBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
+    private lateinit var database: DatabaseReference
+
+    private lateinit var teacherNameText: TextView
+    private lateinit var subjectsCountText: TextView
+    private lateinit var pendingCountText: TextView
+    private lateinit var studentsCountText: TextView
+
+    private lateinit var assignTasksCard: CardView
+    private lateinit var reviewTasksCard: CardView
+    private lateinit var registerGradesCard: CardView
+    private lateinit var registerAttendanceCard: CardView
+    private lateinit var notateObservationsCard: CardView
+    private lateinit var consultCalendarCard: CardView
+    private lateinit var sendMessagesCard: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTeacherPanelBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_teacher_panel)
 
         auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
+        database = FirebaseDatabase.getInstance().reference
 
-        setupUI()
-        loadUserData()
-        setupListeners()
+        initializeViews()
+        loadTeacherData()
+        setupClickListeners()
     }
 
-    private fun setupUI() {
-        // Título por defecto (lo sobreescribimos cuando llegue el usuario)
-        binding.topAppBar.title = "Carlos G. - Docente"
+    private fun initializeViews() {
+        teacherNameText = findViewById(R.id.teacherNameText)
+        subjectsCountText = findViewById(R.id.subjectsCountText)
+        pendingCountText = findViewById(R.id.pendingCountText)
+        studentsCountText = findViewById(R.id.studentsCountText)
 
-        // Imagen de portada (del HTML que compartiste)
-        val heroUrl =
-            "https://lh3.googleusercontent.com/aida-public/AB6AXuDyF_n38BaBvMj_4SoNnB1PI4NZzbuEPejuceXpw1wswTcCKZjVvFaTVV17MD5Yl-XONv_PDldkBlPcKVk6QKApQcmPDIWef6HNj_7xjN4pQk5sVpUAj2Q4chOi0Xo7BbI3Q4WWDbndb9qXrtUoDCE-FY0iOMMtoaKsA2CKmtmRDzspXYJVeKFUbWYIrQnNI825bL2q20sRyiPCW07l7DX1zkRjnG2WdMLRdzD0ZWobAiH1pH24vHxOBoAU_ozQRp2obiSjZbXckvY"
-        Glide.with(this).load(heroUrl).into(binding.imgHero)
-
-        // Subtítulo por defecto (puedes actualizarlo con datos reales luego)
-        binding.tvSubtitle.text =
-            "Actualmente enseñas 5 asignaturas y tienes 2 tareas pendientes por calificar"
-
-        // Contadores demo (cámbialos por valores reales si los tienes en Firestore)
-        binding.tvSubjects.text = "5"
-        binding.tvPendingTasks.text = "2"
-        binding.tvStudents.text = "120"
+        assignTasksCard = findViewById(R.id.assignTasksCard)
+        reviewTasksCard = findViewById(R.id.reviewTasksCard)
+        registerGradesCard = findViewById(R.id.registerGradesCard)
+        registerAttendanceCard = findViewById(R.id.registerAttendanceCard)
+        notateObservationsCard = findViewById(R.id.notateObservationsCard)
+        consultCalendarCard = findViewById(R.id.consultCalendarCard)
+        sendMessagesCard = findViewById(R.id.sendMessagesCard)
     }
 
-    /** Carga nombre del usuario desde Firestore */
-    private fun loadUserData() {
+    private fun loadTeacherData() {
         val currentUser = auth.currentUser
-        if (currentUser != null) {
-            db.collection("users")
-                .document(currentUser.uid)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        val user = document.toObject(User::class.java)
-                        if (user != null) {
-                            // Muestra "Nombre Apellido"
-                            val nombreCompleto = "${user.nombre} ${user.apellido}".trim()
-                            binding.tvUserName.text = "Hola, $nombreCompleto"
-                            // Actualiza el título del AppBar con el rol
-                            binding.topAppBar.title = "$nombreCompleto - Docente"
-                        }
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e("TeacherPanel", "Error al cargar usuario", e)
-                }
+        if (currentUser == null) {
+            // Redirect to login if not authenticated
+            finish()
+            return
         }
+
+        val teacherId = currentUser.uid
+        val teacherRef = database.child("profesores").child(teacherId)
+
+        teacherRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val teacherName = snapshot.child("nombre").getValue(String::class.java) ?: "Profesor"
+                teacherNameText.text = "Hola, $teacherName"
+
+                // Count subjects (materias)
+                val materiasCount = snapshot.child("materias").childrenCount.toInt()
+                subjectsCountText.text = materiasCount.toString()
+
+                // Count pending tasks
+                var pendingCount = 0
+                snapshot.child("materias").children.forEach { materia ->
+                    val pendientes = materia.child("pendientes").getValue(Int::class.java) ?: 0
+                    pendingCount += pendientes
+                }
+                pendingCountText.text = pendingCount.toString()
+
+                // Count total students
+                val cantidadEstudiantes = snapshot.child("cantidad_estudiantes").getValue(Int::class.java) ?: 0
+                studentsCountText.text = cantidadEstudiantes.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+            }
+        })
     }
 
-    /** Listeners básicos: menú, campana y logout */
-    private fun setupListeners() {
-        // Icono de navegación del AppBar (engranaje del sistema en este layout)
-        binding.topAppBar.setNavigationOnClickListener {
-            Toast.makeText(this, "Ajustes (pendiente)", Toast.LENGTH_SHORT).show()
+    private fun setupClickListeners() {
+        assignTasksCard.setOnClickListener {
+            // TODO: Navigate to AssignTasksActivity
+            // startActivity(Intent(this, AssignTasksActivity::class.java))
         }
 
-        // Botón de notificaciones del header
-        binding.btnNotifications.setOnClickListener {
-            Toast.makeText(this, "Notificaciones (pendiente)", Toast.LENGTH_SHORT).show()
+        reviewTasksCard.setOnClickListener {
+            // TODO: Navigate to ReviewTasksActivity
+            // startActivity(Intent(this, ReviewTasksActivity::class.java))
         }
 
-
-        binding.rowAssignTasks.setOnClickListener {
-            val intent = Intent(this, ActivityCrearTarea::class.java)
-            startActivity(intent)
+        registerGradesCard.setOnClickListener {
+            // TODO: Navigate to RegisterGradesActivity
+            // startActivity(Intent(this, RegisterGradesActivity::class.java))
         }
 
-        binding.rowReviewTasks.setOnClickListener {
-            val intent = Intent(this, RevisarTareaActivity::class.java)
-            startActivity(intent)
+        registerAttendanceCard.setOnClickListener {
+            // TODO: Navigate to RegisterAttendanceActivity
+            // startActivity(Intent(this, RegisterAttendanceActivity::class.java))
         }
 
+        notateObservationsCard.setOnClickListener {
+            // TODO: Navigate to NotateObservationsActivity
+            // startActivity(Intent(this, NotateObservationsActivity::class.java))
+        }
 
-        // Logout
-        binding.btnLogout.setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+        consultCalendarCard.setOnClickListener {
+            // TODO: Navigate to ConsultCalendarActivity
+            // startActivity(Intent(this, ConsultCalendarActivity::class.java))
+        }
+
+        sendMessagesCard.setOnClickListener {
+            // TODO: Navigate to SendMessagesActivity
+            // startActivity(Intent(this, SendMessagesActivity::class.java))
         }
     }
 }

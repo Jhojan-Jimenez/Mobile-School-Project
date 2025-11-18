@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
+
 
 android {
     namespace = "com.jhojan.school_project"
@@ -40,24 +42,35 @@ android {
 }
 
 dependencies {
-    implementation("com.google.firebase:firebase-auth-ktx:23.1.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:25.1.1")
+    // Firebase BOM
+    implementation(platform(libs.firebase.bom))
+
+    // Firebase usando BOM (sin versión)
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.database.ktx)
+
+    // Glide
+    implementation(libs.glide)
+    implementation(libs.google.firebase.database.ktx)
+    implementation(libs.google.firebase.auth.ktx)
+    annotationProcessor(libs.compiler)
+
+    // CircleImageView
+    implementation(libs.circleimageview)
+
+    // AndroidX TOML
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
-    implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation(libs.androidx.activity)
+
+    // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-
-    // Navigation Component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 }
+
 
 apply(plugin = "com.google.gms.google-services")

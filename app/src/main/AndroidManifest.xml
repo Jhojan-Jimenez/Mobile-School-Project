@@ -21,6 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolProject">
         <activity
+            android:name=".TeacherHeader"
+            android:exported="false" />
+        <activity
+            android:name=".TeacherBottomNavigationView"
+            android:exported="false" />
+        <activity
             android:name=".RevisarTareaActivity"
             android:exported="false" />
         <activity
@@ -72,11 +78,9 @@
         <activity
             android:name=".ClasesProfesorActivity"
             android:exported="false" />
-
         <activity
             android:name=".AsistenciaActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
             android:exported="false" />
