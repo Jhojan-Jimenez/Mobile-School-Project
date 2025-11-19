@@ -16,7 +16,7 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crear Evento"
+            android:text="Editar Evento"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="@color/purple_700"
@@ -105,13 +105,13 @@
 
         <!-- Botones -->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCreateEvent"
+            android:id="@+id/btnUpdateEvent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/purple_700"
             android:textColor="@color/white"
             android:layout_marginTop="32dp"
-            android:text="Crear Evento"
+            android:text="Actualizar Evento"
             android:padding="16dp"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/containerConditionalSpinners"
@@ -128,7 +128,7 @@
             android:text="Cancelar"
             android:padding="16dp"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/btnCreateEvent"
+            app:layout_constraintTop_toBottomOf="@id/btnUpdateEvent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="24dp" />

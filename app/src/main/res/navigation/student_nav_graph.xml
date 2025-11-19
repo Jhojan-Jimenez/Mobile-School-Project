@@ -14,15 +14,15 @@
         android:name="com.jhojan.school_project.StudentProfileFragment"
         android:label="Perfil" />
 
-    <fragment
+    <activity
         android:id="@+id/nav_help"
-        android:name="com.jhojan.school_project.StudentHomeFragment"
+        android:name="com.jhojan.school_project.SupportActivity"
         android:label="Soporte" />
 
-    <fragment
-        android:id="@+id/nav_bell"
-        android:name="com.jhojan.school_project.StudentHomeFragment"
-        android:label="Notificaciones" />
+    <activity
+        android:id="@+id/nav_tasks"
+        android:name="com.jhojan.school_project.TasksActivity"
+        android:label="Tareas" />
 
     <fragment
         android:id="@+id/nav_configuraciones"

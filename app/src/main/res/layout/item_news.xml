@@ -46,7 +46,17 @@
             android:layout_height="40dp"
             android:src="@android:drawable/ic_menu_edit"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Editar noticia" />
+            android:contentDescription="Editar noticia"
+            android:tint="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Eliminar noticia"
+            android:tint="@color/white" />
 
     </LinearLayout>
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,17 +40,54 @@ class StudentListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = StudentAdapter(students) { student ->
-            // Handle edit click
-            val intent = Intent(requireContext(), EditStudentActivity::class.java)
-            intent.putExtra("STUDENT_ID", student.user.id)
-            startActivity(intent)
-        }
+        adapter = StudentAdapter(
+            students = students,
+            onEditClick = { student ->
+                val intent = Intent(requireContext(), EditStudentActivity::class.java)
+                intent.putExtra("STUDENT_ID", student.user.id)
+                startActivity(intent)
+            },
+            onDeleteClick = { student ->
+                showDeleteConfirmationDialog(student)
+            }
+        )
 
         binding.recyclerViewStudents.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@StudentListFragment.adapter
         }
+    }
+
+    private fun showDeleteConfirmationDialog(student: Student) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Está seguro de que desea eliminar al estudiante \"${student.user.nombreCompleto}\"?")
+            .setPositiveButton("Sí") { dialog, _ ->
+                deleteStudent(student)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deleteStudent(student: Student) {
+        showLoading(true)
+
+        db.collection("users")
+            .document(student.user.id)
+            .delete()
+            .addOnSuccessListener {
+                students.remove(student)
+                adapter.notifyDataSetChanged()
+                showLoading(false)
+                Toast.makeText(requireContext(), "Estudiante eliminado exitosamente", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                showLoading(false)
+                Toast.makeText(requireContext(), "Error al eliminar estudiante: ${e.message}", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun setupListeners() {

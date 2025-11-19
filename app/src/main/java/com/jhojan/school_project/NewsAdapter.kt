@@ -7,7 +7,8 @@ import com.jhojan.school_project.databinding.ItemNewsBinding
 
 class NewsAdapter(
     private val newsList: MutableList<News>,
-    private val onEditClick: (News) -> Unit
+    private val onEditClick: (News) -> Unit,
+    private val onDeleteClick: (News) -> Unit
 ) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     inner class NewsViewHolder(private val binding: ItemNewsBinding) :
@@ -19,6 +20,10 @@ class NewsAdapter(
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(news)
+            }
+
+            binding.btnDelete.setOnClickListener {
+                onDeleteClick(news)
             }
         }
     }

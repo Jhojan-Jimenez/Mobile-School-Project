@@ -24,7 +24,7 @@
             android:src="@android:drawable/ic_menu_my_calendar"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="16dp"
-            android:tint="@color/purple_700" />
+            android:tint="@color/estudiante" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -40,7 +40,7 @@
                 android:text="10:00 AM"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/purple_700" />
+                android:textColor="@color/estudiante" />
 
             <!-- Título del evento -->
             <TextView

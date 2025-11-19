@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,14 +40,52 @@ class CourseListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = CourseAdapter(courses) { course ->
-            Toast.makeText(requireContext(), "Editar: ${course.nombre}", Toast.LENGTH_SHORT).show()
-        }
+        adapter = CourseAdapter(
+            courses = courses,
+            onEditClick = { course ->
+                Toast.makeText(requireContext(), "Editar: ${course.nombre}", Toast.LENGTH_SHORT).show()
+            },
+            onDeleteClick = { course ->
+                showDeleteConfirmationDialog(course)
+            }
+        )
 
         binding.recyclerViewCourses.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@CourseListFragment.adapter
         }
+    }
+
+    private fun showDeleteConfirmationDialog(course: Course) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Está seguro de que desea eliminar el curso \"${course.nombre}\"?")
+            .setPositiveButton("Sí") { dialog, _ ->
+                deleteCourse(course)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deleteCourse(course: Course) {
+        showLoading(true)
+
+        db.collection("courses")
+            .document(course.id)
+            .delete()
+            .addOnSuccessListener {
+                courses.remove(course)
+                adapter.notifyDataSetChanged()
+                showLoading(false)
+                Toast.makeText(requireContext(), "Curso eliminado exitosamente", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                showLoading(false)
+                Toast.makeText(requireContext(), "Error al eliminar curso: ${e.message}", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun setupListeners() {

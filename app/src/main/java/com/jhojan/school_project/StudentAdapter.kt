@@ -7,7 +7,8 @@ import com.jhojan.school_project.databinding.ItemStudentBinding
 
 class StudentAdapter(
     private val students: MutableList<Student>,
-    private val onEditClick: (Student) -> Unit
+    private val onEditClick: (Student) -> Unit,
+    private val onDeleteClick: (Student) -> Unit
 ) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
 
     inner class StudentViewHolder(private val binding: ItemStudentBinding) :
@@ -19,6 +20,10 @@ class StudentAdapter(
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(student)
+            }
+
+            binding.btnDelete.setOnClickListener {
+                onDeleteClick(student)
             }
         }
     }

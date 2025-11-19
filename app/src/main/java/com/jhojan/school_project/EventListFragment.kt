@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,14 +40,54 @@ class EventListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = EventAdapter(events) { event ->
-            Toast.makeText(requireContext(), "Editar: ${event.titulo}", Toast.LENGTH_SHORT).show()
-        }
+        adapter = EventAdapter(
+            events = events,
+            onEditClick = { event ->
+                val intent = Intent(requireContext(), EditEventActivity::class.java)
+                intent.putExtra("EVENT_ID", event.id)
+                startActivity(intent)
+            },
+            onDeleteClick = { event ->
+                showDeleteConfirmationDialog(event)
+            }
+        )
 
         binding.recyclerViewEvents.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@EventListFragment.adapter
         }
+    }
+
+    private fun showDeleteConfirmationDialog(event: Event) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Está seguro de que desea eliminar el evento \"${event.titulo}\"?")
+            .setPositiveButton("Sí") { dialog, _ ->
+                deleteEvent(event)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deleteEvent(event: Event) {
+        showLoading(true)
+
+        db.collection("events")
+            .document(event.id)
+            .delete()
+            .addOnSuccessListener {
+                events.remove(event)
+                adapter.notifyDataSetChanged()
+                showLoading(false)
+                Toast.makeText(requireContext(), "Evento eliminado exitosamente", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                showLoading(false)
+                Toast.makeText(requireContext(), "Error al eliminar evento: ${e.message}", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun setupListeners() {

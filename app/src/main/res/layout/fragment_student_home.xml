@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp" android:background="@color/white">
         <!-- Perfil -->
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,6 +81,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvTask1Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tarea 1"
@@ -88,6 +89,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tvTask1Subject"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Matemáticas"
@@ -95,10 +97,11 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvTask1Date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2024-07-20"
-                    android:textColor="#617589"/>
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -120,24 +123,27 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvTask2Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tarea 2"
-                        android:textColor="#FFF"
+                        android:textColor="@color/white"
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tvTask2Subject"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ciencias"
-                        android:textColor="#FFF"/>
+                        android:textColor="@color/white"/>
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvTask2Date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2024-07-22"
-                    android:textColor="#617589"/>
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -164,10 +170,11 @@
                 android:padding="12dp" android:background="@color/estudiante">
 
                 <TextView
+                    android:id="@+id/tvAverageGrade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8.5"
-                    android:textColor="#FFF"/>
+                    android:textColor="@color/white"/>
 
                 <Space
                     android:layout_width="0dp"
@@ -178,7 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Promedio"
-                    android:textColor="#FFF"/>
+                    android:textColor="@color/white"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

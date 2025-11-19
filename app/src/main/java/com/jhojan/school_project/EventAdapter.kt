@@ -7,7 +7,8 @@ import com.jhojan.school_project.databinding.ItemEventBinding
 
 class EventAdapter(
     private val events: MutableList<Event>,
-    private val onEditClick: (Event) -> Unit
+    private val onEditClick: (Event) -> Unit,
+    private val onDeleteClick: (Event) -> Unit
 ) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     inner class EventViewHolder(private val binding: ItemEventBinding) :
@@ -28,6 +29,10 @@ class EventAdapter(
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(event)
+            }
+
+            binding.btnDelete.setOnClickListener {
+                onDeleteClick(event)
             }
         }
     }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,16 +40,54 @@ class SubjectListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = SubjectAdapter(subjects) { subject ->
-            val intent = Intent(requireContext(), EditSubjectActivity::class.java)
-            intent.putExtra("SUBJECT_ID", subject.id)
-            startActivity(intent)
-        }
+        adapter = SubjectAdapter(
+            subjects = subjects,
+            onEditClick = { subject ->
+                val intent = Intent(requireContext(), EditSubjectActivity::class.java)
+                intent.putExtra("SUBJECT_ID", subject.id)
+                startActivity(intent)
+            },
+            onDeleteClick = { subject ->
+                showDeleteConfirmationDialog(subject)
+            }
+        )
 
         binding.recyclerViewSubjects.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@SubjectListFragment.adapter
         }
+    }
+
+    private fun showDeleteConfirmationDialog(subject: Subject) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Está seguro de que desea eliminar la materia \"${subject.nombre}\"?")
+            .setPositiveButton("Sí") { dialog, _ ->
+                deleteSubject(subject)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deleteSubject(subject: Subject) {
+        showLoading(true)
+
+        db.collection("subjects")
+            .document(subject.id)
+            .delete()
+            .addOnSuccessListener {
+                subjects.remove(subject)
+                adapter.notifyDataSetChanged()
+                showLoading(false)
+                Toast.makeText(requireContext(), "Materia eliminada exitosamente", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                showLoading(false)
+                Toast.makeText(requireContext(), "Error al eliminar materia: ${e.message}", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun setupListeners() {

@@ -125,7 +125,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -142,6 +143,30 @@
                             android:text="Estado"
                             android:textSize="16sp"
                             android:textColor="@color/white" />
+                    </LinearLayout>
+
+                    <!-- Nota (solo visible si está completada) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@android:drawable/ic_menu_edit"
+                            android:tint="@color/white"
+                            android:layout_marginEnd="12dp" />
+
+                        <TextView
+                            android:id="@+id/tvTaskGrade"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Nota"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -160,17 +185,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="2dp"
-                app:cardCornerRadius="8dp">
+                app:cardCornerRadius="8dp"
+                android:layout_marginBottom="16dp" >
 
                 <TextView
                     android:id="@+id/tvTaskDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Descripción de la tarea"
+                    android:background="@color/white"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:padding="16dp"
                     android:minHeight="100dp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Enlace (solo visible si existe) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enlace"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:id="@+id/tvLinkLabel"  />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="8dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:background="@color/white"
+                    android:id="@+id/tvTaskLink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="https://ejemplo.com"
+                    android:textSize="16sp"
+                    android:textColor="@color/estudiante"
+                    android:padding="16dp"
+                    android:autoLink="web"
+                    android:visibility="gone" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </LinearLayout>

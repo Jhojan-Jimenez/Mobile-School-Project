@@ -11,13 +11,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jhojan.school_project.databinding.ActivityCreateEventBinding
+import com.jhojan.school_project.databinding.ActivityEditEventBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class CreateEventActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCreateEventBinding
+class EditEventActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityEditEventBinding
     private lateinit var db: FirebaseFirestore
 
     private val coursesList = mutableListOf<Course>()
@@ -35,18 +35,27 @@ class CreateEventActivity : AppCompatActivity() {
     private var conditionalLabel: TextView? = null
 
     private var selectedDateInMillis: Long? = null
+    private var eventId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCreateEventBinding.inflate(layoutInflater)
+        binding = ActivityEditEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         db = FirebaseFirestore.getInstance()
+
+        eventId = intent.getStringExtra("EVENT_ID") ?: ""
+        if (eventId.isEmpty()) {
+            Toast.makeText(this, "Error: ID de evento no válido", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
         loadData()
         setupAlcanceSpinner()
         setupDatePicker()
         setupListeners()
+        loadEventData()
     }
 
     private fun loadData() {
@@ -169,6 +178,9 @@ class CreateEventActivity : AppCompatActivity() {
     private fun setupDatePicker() {
         binding.etFecha.setOnClickListener {
             val calendar = Calendar.getInstance()
+            if (selectedDateInMillis != null) {
+                calendar.timeInMillis = selectedDateInMillis!!
+            }
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -248,9 +260,69 @@ class CreateEventActivity : AppCompatActivity() {
         binding.containerConditionalSpinners.addView(conditionalSpinner)
     }
 
+    private fun loadEventData() {
+        showLoading(true)
+
+        db.collection("events")
+            .document(eventId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val titulo = document.getString("titulo") ?: ""
+                    val fecha = document.getTimestamp("fecha")?.toDate()?.time ?: System.currentTimeMillis()
+                    val alcance = document.getString("alcance") ?: ""
+
+                    // Establecer título
+                    binding.etTitulo.setText(titulo)
+
+                    // Establecer fecha
+                    selectedDateInMillis = fecha
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    binding.etFecha.setText(dateFormat.format(fecha))
+
+                    // Establecer alcance
+                    val alcancePosition = alcanceOptions.indexOf(alcance)
+                    if (alcancePosition >= 0) {
+                        binding.spinnerAlcance.setSelection(alcancePosition)
+                    }
+
+                    // Establecer campos condicionales según el alcance
+                    when (alcance) {
+                        "Curso" -> {
+                            val cursoNombre = document.getString("curso_nombre") ?: ""
+                            val cursoPosition = coursesNames.indexOf(cursoNombre)
+                            if (cursoPosition >= 0) {
+                                conditionalSpinner?.setSelection(cursoPosition)
+                            }
+                        }
+                        "Asignatura" -> {
+                            val asignaturaNombre = document.getString("asignatura_nombre") ?: ""
+                            val asignaturaPosition = subjectsNames.indexOf(asignaturaNombre)
+                            if (asignaturaPosition >= 0) {
+                                conditionalSpinner?.setSelection(asignaturaPosition)
+                            }
+                        }
+                        "Estudiante" -> {
+                            val estudianteNombre = document.getString("estudiante_nombre") ?: ""
+                            val estudiantePosition = studentsNames.indexOf(estudianteNombre)
+                            if (estudiantePosition >= 0) {
+                                conditionalSpinner?.setSelection(estudiantePosition)
+                            }
+                        }
+                    }
+                }
+                showLoading(false)
+            }
+            .addOnFailureListener { e ->
+                showLoading(false)
+                Toast.makeText(this, "Error al cargar evento: ${e.message}", Toast.LENGTH_LONG).show()
+                finish()
+            }
+    }
+
     private fun setupListeners() {
-        binding.btnCreateEvent.setOnClickListener {
-            createEvent()
+        binding.btnUpdateEvent.setOnClickListener {
+            updateEvent()
         }
 
         binding.btnCancel.setOnClickListener {
@@ -258,7 +330,7 @@ class CreateEventActivity : AppCompatActivity() {
         }
     }
 
-    private fun createEvent() {
+    private fun updateEvent() {
         val titulo = binding.etTitulo.text.toString().trim()
         val alcancePosition = binding.spinnerAlcance.selectedItemPosition
 
@@ -312,14 +384,15 @@ class CreateEventActivity : AppCompatActivity() {
             }
         }
 
-        // Crear el evento en Firebase
+        // Actualizar el evento en Firebase
         db.collection("events")
-            .add(eventData)
+            .document(eventId)
+            .update(eventData as Map<String, Any>)
             .addOnSuccessListener {
                 showLoading(false)
                 Toast.makeText(
                     this,
-                    "Evento creado exitosamente",
+                    "Evento actualizado exitosamente",
                     Toast.LENGTH_LONG
                 ).show()
                 finish()
@@ -328,7 +401,7 @@ class CreateEventActivity : AppCompatActivity() {
                 showLoading(false)
                 Toast.makeText(
                     this,
-                    "Error al crear evento: ${e.message}",
+                    "Error al actualizar evento: ${e.message}",
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -364,7 +437,7 @@ class CreateEventActivity : AppCompatActivity() {
 
     private fun showLoading(show: Boolean) {
         binding.progressBar.visibility = if (show) View.VISIBLE else View.GONE
-        binding.btnCreateEvent.isEnabled = !show
+        binding.btnUpdateEvent.isEnabled = !show
         binding.btnCancel.isEnabled = !show
     }
 }

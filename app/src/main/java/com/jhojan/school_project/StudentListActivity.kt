@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,15 +30,52 @@ class StudentListActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = StudentAdapter(students) { student ->
-            // Handle edit click
-            Toast.makeText(this, "Editar: ${student.user.nombre}", Toast.LENGTH_SHORT).show()
-        }
+        adapter = StudentAdapter(
+            students = students,
+            onEditClick = { student ->
+                Toast.makeText(this, "Editar: ${student.user.nombreCompleto}", Toast.LENGTH_SHORT).show()
+            },
+            onDeleteClick = { student ->
+                showDeleteConfirmationDialog(student)
+            }
+        )
 
         binding.recyclerViewStudents.apply {
             layoutManager = LinearLayoutManager(this@StudentListActivity)
             adapter = this@StudentListActivity.adapter
         }
+    }
+
+    private fun showDeleteConfirmationDialog(student: Student) {
+        AlertDialog.Builder(this)
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Está seguro de que desea eliminar al estudiante \"${student.user.nombreCompleto}\"?")
+            .setPositiveButton("Sí") { dialog, _ ->
+                deleteStudent(student)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deleteStudent(student: Student) {
+        showLoading(true)
+
+        db.collection("users")
+            .document(student.user.id)
+            .delete()
+            .addOnSuccessListener {
+                students.remove(student)
+                adapter.notifyDataSetChanged()
+                showLoading(false)
+                Toast.makeText(this, "Estudiante eliminado exitosamente", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                showLoading(false)
+                Toast.makeText(this, "Error al eliminar estudiante: ${e.message}", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun setupListeners() {

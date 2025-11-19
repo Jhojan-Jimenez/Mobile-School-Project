@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -39,16 +40,54 @@ class NewsListFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = NewsAdapter(newsList) { news ->
-            val intent = Intent(requireContext(), EditNewsActivity::class.java)
-            intent.putExtra("NEWS_ID", news.id)
-            startActivity(intent)
-        }
+        adapter = NewsAdapter(
+            newsList = newsList,
+            onEditClick = { news ->
+                val intent = Intent(requireContext(), EditNewsActivity::class.java)
+                intent.putExtra("NEWS_ID", news.id)
+                startActivity(intent)
+            },
+            onDeleteClick = { news ->
+                showDeleteConfirmationDialog(news)
+            }
+        )
 
         binding.recyclerViewNews.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = this@NewsListFragment.adapter
         }
+    }
+
+    private fun showDeleteConfirmationDialog(news: News) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Está seguro de que desea eliminar la noticia \"${news.titulo}\"?")
+            .setPositiveButton("Sí") { dialog, _ ->
+                deleteNews(news)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    private fun deleteNews(news: News) {
+        showLoading(true)
+
+        db.collection("news")
+            .document(news.id)
+            .delete()
+            .addOnSuccessListener {
+                newsList.remove(news)
+                adapter.notifyDataSetChanged()
+                showLoading(false)
+                Toast.makeText(requireContext(), "Noticia eliminada exitosamente", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                showLoading(false)
+                Toast.makeText(requireContext(), "Error al eliminar noticia: ${e.message}", Toast.LENGTH_LONG).show()
+            }
     }
 
     private fun setupListeners() {

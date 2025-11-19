@@ -7,7 +7,8 @@ import com.jhojan.school_project.databinding.ItemSubjectBinding
 
 class SubjectAdapter(
     private val subjects: MutableList<Subject>,
-    private val onEditClick: (Subject) -> Unit
+    private val onEditClick: (Subject) -> Unit,
+    private val onDeleteClick: (Subject) -> Unit
 ) : RecyclerView.Adapter<SubjectAdapter.SubjectViewHolder>() {
 
     inner class SubjectViewHolder(private val binding: ItemSubjectBinding) :
@@ -19,6 +20,10 @@ class SubjectAdapter(
 
             binding.btnEdit.setOnClickListener {
                 onEditClick(subject)
+            }
+
+            binding.btnDelete.setOnClickListener {
+                onDeleteClick(subject)
             }
         }
     }

@@ -1,19 +1,48 @@
 package com.jhojan.school_project
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.jhojan.school_project.databinding.ActivitySupportBinding
 
 class SupportActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySupportBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySupportBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
         setupListeners()
+        loadUserData()
+    }
+
+    private fun loadUserData() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            // Pre-llenar el correo del usuario si está disponible
+            db.collection("users")
+                .document(currentUser.uid)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        val correo = document.getString("correo") ?: currentUser.email ?: ""
+                        val cedula = document.getString("cedula") ?: ""
+
+                        binding.etEmail.setText(correo)
+                        binding.etIdentification.setText(cedula)
+                    }
+                }
+        }
     }
 
     private fun setupListeners() {
@@ -23,7 +52,36 @@ class SupportActivity : AppCompatActivity() {
             val description = binding.etDescription.text.toString().trim()
 
             if (validateInputs(email, identification, description)) {
-                // Solo visual - mostrar mensaje de éxito
+                createSupportTicket(email, identification, description)
+            }
+        }
+
+        binding.btnCancel.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun createSupportTicket(email: String, identification: String, description: String) {
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Toast.makeText(this, "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val reportData = hashMapOf(
+            "correo" to email,
+            "identificacion" to identification,
+            "descripcion" to description,
+            "usuario_id" to currentUser.uid,
+            "fecha_creacion" to Timestamp.now(),
+            "estado" to "Pendiente",
+            "motivo" to "Inicio de sesión"
+        )
+
+        db.collection("reportes")
+            .add(reportData)
+            .addOnSuccessListener { documentReference ->
+                Log.d("SupportActivity", "Reporte creado con ID: ${documentReference.id}")
                 Toast.makeText(
                     this,
                     "Ticket de soporte registrado exitosamente. Nuestro equipo se pondrá en contacto pronto.",
@@ -31,11 +89,14 @@ class SupportActivity : AppCompatActivity() {
                 ).show()
                 finish()
             }
-        }
-
-        binding.btnCancel.setOnClickListener {
-            finish()
-        }
+            .addOnFailureListener { e ->
+                Log.e("SupportActivity", "Error al crear reporte", e)
+                Toast.makeText(
+                    this,
+                    "Error al registrar el ticket: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
     }
 
     private fun validateInputs(email: String, identification: String, description: String): Boolean {

@@ -48,7 +48,18 @@
             android:layout_height="40dp"
             android:src="@android:drawable/ic_menu_edit"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Editar curso" />
+            android:contentDescription="Editar curso"
+            android:tint="@color/white" />
+
+        <!-- Delete Icon -->
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Eliminar curso"
+            android:tint="@color/white" />
 
     </LinearLayout>
 

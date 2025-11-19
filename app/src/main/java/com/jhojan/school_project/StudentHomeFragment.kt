@@ -2,6 +2,7 @@ package com.jhojan.school_project
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,20 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jhojan.school_project.databinding.FragmentStudentHomeBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
+
+data class Tarea(
+    val id: String = "",
+    val titulo: String = "",
+    val descripcion: String = "",
+    val estudiante: String = "",
+    val fecha_entrega: Long = 0L,
+    val materia: String = "",
+    val nota: Double = 0.0,
+    val profesor: String = "",
+    val completada: Boolean = false
+)
 
 class StudentHomeFragment : Fragment() {
 
@@ -35,6 +50,8 @@ class StudentHomeFragment : Fragment() {
         db = FirebaseFirestore.getInstance()
 
         loadUserData()
+        loadPendingTasks()
+        loadGradeAverage()
         setupUI()
         setupClickListeners()
     }
@@ -56,6 +73,110 @@ class StudentHomeFragment : Fragment() {
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(requireContext(), "Error al cargar datos: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun loadPendingTasks() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            db.collection("tareas")
+                .whereEqualTo("estudiante", currentUser.uid)
+                .whereEqualTo("completada", false)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val tareas = mutableListOf<Tarea>()
+                    for (document in documents) {
+                        val tarea = Tarea(
+                            id = document.id,
+                            titulo = document.getString("titulo") ?: "",
+                            descripcion = document.getString("descripcion") ?: "",
+                            estudiante = document.getString("estudiante") ?: "",
+                            fecha_entrega = document.getTimestamp("fecha_entrega")?.toDate()?.time ?: 0L,
+                            materia = document.getString("materia") ?: "",
+                            nota = document.getDouble("nota") ?: 0.0,
+                            profesor = document.getString("profesor") ?: "",
+                            completada = document.getBoolean("completada") ?: false
+                        )
+                        tareas.add(tarea)
+                    }
+
+                    // Ordenar por fecha de entrega en el cliente y tomar solo las 2 primeras
+                    val sortedTareas = tareas.sortedBy { it.fecha_entrega }.take(2)
+                    updateTasksUI(sortedTareas)
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Error al cargar tareas: ${e.message}", Toast.LENGTH_SHORT).show()
+                    // Mostrar en Logcat
+                    Log.e("FirestoreError", "Error al cargar tareas", e)
+                }
+        }
+    }
+
+    private fun updateTasksUI(tareas: List<Tarea>) {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        // Actualizar las cards de tareas con datos reales
+        if (tareas.isNotEmpty()) {
+            // Primera tarea
+            if (tareas.size > 0) {
+                binding.tvTask1Title.text = tareas[0].titulo
+                binding.tvTask1Date.text = dateFormat.format(tareas[0].fecha_entrega)
+
+                loadSubjectName(tareas[0].materia) { subjectName ->
+                    binding.tvTask1Subject.text = subjectName
+                }
+            }
+
+            // Segunda tarea
+            if (tareas.size > 1) {
+                binding.tvTask2Title.text = tareas[1].titulo
+                binding.tvTask2Date.text = dateFormat.format(tareas[1].fecha_entrega)
+
+                loadSubjectName(tareas[1].materia) { subjectName ->
+                    binding.tvTask2Subject.text = subjectName
+                }
+            }
+        }
+    }
+
+    private fun loadSubjectName(subjectId: String, callback: (String) -> Unit) {
+        db.collection("subjects")
+            .document(subjectId)
+            .get()
+            .addOnSuccessListener { document ->
+                val subjectName = document.getString("nombre") ?: "Materia"
+                callback(subjectName)
+            }
+            .addOnFailureListener {
+                callback("Materia")
+            }
+    }
+
+    private fun loadGradeAverage() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            db.collection("tareas")
+                .whereEqualTo("estudiante", currentUser.uid)
+                .whereEqualTo("completada", true)
+                .get()
+                .addOnSuccessListener { documents ->
+                    var totalGrade = 0.0
+                    var count = 0
+
+                    for (document in documents) {
+                        val nota = document.getDouble("nota") ?: 0.0
+                        if (nota > 0) {
+                            totalGrade += nota
+                            count++
+                        }
+                    }
+
+                    val average = if (count > 0) totalGrade / count else 0.0
+                    binding.tvAverageGrade.text = String.format("%.1f", average)
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Error al calcular promedio: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
