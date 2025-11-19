@@ -232,6 +232,109 @@
                     android:autoLink="web"
                     android:visibility="gone" />
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sección de adjuntar archivo -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Adjuntar Archivo"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                android:id="@+id/tvAttachLabel" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAttachFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar Archivo"
+                android:padding="12dp"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_button_rounded"
+                android:backgroundTint="@color/gray_400"
+                android:drawableStart="@android:drawable/ic_menu_upload"
+                android:drawablePadding="8dp"
+                android:visibility="gone" />
+
+            <!-- Mostrar archivo seleccionado -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardAttachedFile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="8dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="12dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_menu_info_details"
+                        android:tint="@color/estudiante"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/tvAttachedFileName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="archivo.pdf"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:ellipsize="middle"
+                        android:singleLine="true" />
+
+                    <ImageButton
+                        android:id="@+id/btnRemoveFile"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/ic_menu_close_clear_cancel"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:tint="@color/gray_400"
+                        android:contentDescription="Eliminar archivo" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Botón para marcar como completada -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnMarkComplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Marcar como Completada"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_button_rounded"
+                android:backgroundTint="@color/estudiante"
+                android:visibility="gone" />
+
+            <!-- Botón para desmarcar como completada -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUnmarkComplete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Desmarcar como Completada"
+                android:padding="16dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_button_rounded"
+                android:backgroundTint="@color/gray_400"
+                android:visibility="gone" />
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

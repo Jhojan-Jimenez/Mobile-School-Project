@@ -201,6 +201,11 @@ class StudentHomeFragment : Fragment() {
             .load("https://lh3.googleusercontent.com/aida-public/AB6AXuDYc7_Uiz98j5i7uIXe0zBhxLRzKFRzVeHZnBBukLFjX0WLv9zRD6U3Tpv2Xu8xNQ22u40VOHGYDETfeQlSf3oklz97alJVY_trUpMeQEQsUfXtSaQxaUalofv8cOBBYqP1JExhH_NRiL90ZFbPQhNRXwZkWVJjig0Oto4_sruPHMAmPp9kjEIX6zmSrp8EnGaZ6RblY38NGWRjc4AlKljbq8k_bBrPLVhfP9EMz74KIEQdDJsNEMC566KPcWkYYwOoOO2lu-BI74k")
             .placeholder(android.R.color.darker_gray)
             .into(binding.imgCard3)
+
+        Glide.with(this)
+            .load("https://lh3.googleusercontent.com/aida-public/AB6AXuAnP2WWoz9Cc6kaOMAkhsMy0xrMLZ4qrvd790pNEAMpwe0BK9eEVmj_5Gv4xe0PudRpyKDTfRHDUpH5_KJtl7-CrepjoNygXV5giJh3J7PYxXL64Tbu-jrmef7uFUWqw3uF6K8_Vdu3T81SuUpb0xWQ-bFIzb0LGgcHs7kGEm0jcsdi-xzq__8ciXs68RxTCoNtWkKf28fBaSMeSN0uhESIlEiCDyRd4fkrodGP3jBYRbN1OUiaTds-rqxAaCL11ORbU4uIfbMfyY4")
+            .placeholder(android.R.color.darker_gray)
+            .into(binding.imgCard4)
     }
 
     private fun setupClickListeners() {
@@ -219,6 +224,12 @@ class StudentHomeFragment : Fragment() {
         // Card 3: Notas - Ver notas generales
         binding.cardGrades.setOnClickListener {
             val intent = Intent(requireContext(), GradesActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Card 4: Noticias - Ver noticias
+        binding.cardNews.setOnClickListener {
+            val intent = Intent(requireContext(), StudentNewsActivity::class.java)
             startActivity(intent)
         }
     }

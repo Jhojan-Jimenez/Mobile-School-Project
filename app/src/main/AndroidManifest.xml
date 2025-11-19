@@ -157,6 +157,12 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".StudentNewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NewsDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
