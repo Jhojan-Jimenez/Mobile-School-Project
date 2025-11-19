@@ -77,7 +77,6 @@ class ParentHomeActivity : AppCompatActivity() {
         viewGeneralNotesCard = findViewById(R.id.viewGeneralNotesCard)
         contactTeachersCard = findViewById(R.id.contactTeachersCard)
         reportHistoryCard = findViewById(R.id.reportHistoryCard)
-        createClaimsCard = findViewById(R.id.createClaimsCard)
         changeContactInfoCard = findViewById(R.id.changeContactInfoCard)
     }
 
@@ -233,12 +232,9 @@ class ParentHomeActivity : AppCompatActivity() {
             startActivity(Intent(this, ObservacionesAcudienteActivity::class.java))
         }
 
-        createClaimsCard.setOnClickListener {
-            // TODO: Navegar a CrearPQRSActivity
-        }
 
         changeContactInfoCard.setOnClickListener {
-            // TODO: Navegar a CambiarContactoActivity
+            startActivity(Intent(this, PerfilAcudienteActivity::class.java))
         }
     }
 }

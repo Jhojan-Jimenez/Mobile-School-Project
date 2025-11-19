@@ -105,9 +105,9 @@ class ParentBottomNavigationView @JvmOverloads constructor(
 
         navPerfil.setOnClickListener {
             if (currentItem != NavigationItem.PERFIL) {
-                // val intent = Intent(context, StudentPerfilActivity::class.java)
-                // intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                // context.startActivity(intent)
+                val intent = Intent(context, PerfilAcudienteActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                context.startActivity(intent)
             }
         }
     }

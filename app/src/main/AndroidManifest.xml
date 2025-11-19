@@ -21,6 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolProject">
         <activity
+            android:name=".PerfilAcudienteActivity"
+            android:exported="false" />
+        <activity
             android:name=".ObservacionesAcudienteActivity"
             android:exported="false" />
         <activity
