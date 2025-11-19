@@ -21,6 +21,39 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolProject">
         <activity
+            android:name=".PerfilAcudienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ObservacionesAcudienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EnviarMensajeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetalleMateriaAcudienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MateriasAcudienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetalleTareaAcudienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TareasAcudienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalendarioAcudienteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ParentHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ParentHeader"
+            android:exported="false" />
+        <activity
+            android:name=".ParentBottomNavigationView"
+            android:exported="false" />
+        <activity
             android:name=".PerfilProfesorActivity"
             android:exported="false" />
         <activity
