@@ -5,7 +5,10 @@
       "Bash(cat:*)",
       "Bash(test:*)",
       "Bash(adb logcat:*)",
-      "Bash(adb:*)"
+      "Bash(adb:*)",
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(del crear_excel.py)"
     ],
     "deny": [],
     "ask": []
