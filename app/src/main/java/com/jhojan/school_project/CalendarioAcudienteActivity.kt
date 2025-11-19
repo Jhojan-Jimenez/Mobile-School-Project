@@ -8,17 +8,19 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarioActivity : AppCompatActivity() {
+class CalendarioAcudienteActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var auth: FirebaseAuth
 
     // Header y Footer
-    private lateinit var teacherHeader: TeacherHeader
-    private lateinit var bottomNav: TeacherBottomNavigationView
+    private lateinit var parentHeader: ParentHeader
+    private lateinit var bottomNav: ParentBottomNavigationView
 
     // Views
     private lateinit var calendarView: CalendarView
@@ -27,7 +29,7 @@ class CalendarioActivity : AppCompatActivity() {
     private lateinit var scrollEventos: ScrollView
 
     // Datos
-    private var profesorId: String = ""
+    private var estudianteId: String = ""
     private val eventosYTareas = mutableMapOf<String, MutableList<EventoTarea>>()
     private var fechaSeleccionada: String = ""
 
@@ -37,46 +39,70 @@ class CalendarioActivity : AppCompatActivity() {
         val titulo: String,
         val descripcion: String,
         val fecha: Date,
-        val estudiante: String? = null,
-        val materia: String? = null
+        val materia: String? = null,
+        val estado: String? = null
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calendario)
+        setContentView(R.layout.activity_calendario_acudiente)
 
-        // Inicializar Firestore
         db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
 
-        // Obtener el ID del profesor desde SharedPreferences
-        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
-        profesorId = prefs.getString("profesor_id", "") ?: ""
-
-        // Si no hay profesor guardado, usar uno por defecto
-        if (profesorId.isEmpty()) {
-            profesorId = "ZW6kOK1PaGVcteR4N9mzSQlcxjd2"
-        }
-
-        // Inicializar vistas
         initViews()
 
-        // Configurar Header y Footer
+        // Recuperar estudiante si ya existía en SharedPreferences
+        estudianteId = getSharedPreferences("user_prefs", MODE_PRIVATE)
+            .getString("estudiante_id", "") ?: ""
+
+
+        setupListeners()
         setupHeaderFooter()
 
-        // Configurar listeners
-        setupListeners()
+        val acudienteId = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
-        // Cargar datos
-        cargarEventosYTareas()
+        db.collection("users")
+            .document(acudienteId)
+            .get()
+            .addOnSuccessListener { acudienteDoc ->
 
-        // Establecer fecha actual por defecto
-        val calendar = Calendar.getInstance()
-        fechaSeleccionada = formatearFecha(calendar.time)
-        actualizarTituloFecha(calendar.time)
+                if (acudienteDoc.exists()) {
+
+                    estudianteId = acudienteDoc.getString("estudiante_id") ?: ""
+
+                    if (estudianteId.isEmpty()) {
+                        Toast.makeText(this, "No se encontró estudiante asignado", Toast.LENGTH_LONG).show()
+                        return@addOnSuccessListener
+                    }
+
+                    // Guardar estudiante
+                    getSharedPreferences("user_prefs", MODE_PRIVATE)
+                        .edit().putString("estudiante_id", estudianteId).apply()
+
+                    val acudienteId = auth.currentUser?.uid ?: ""
+                    // AHORA SÍ cargar header
+                    parentHeader.loadParentData(acudienteId)
+
+                    // Cargar eventos y tareas
+                    cargarEventosYTareas()
+
+                    // Fecha actual
+                    val calendar = Calendar.getInstance()
+                    fechaSeleccionada = formatearFecha(calendar.time)
+                    actualizarTituloFecha(calendar.time)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error obteniendo estudiante_id", Toast.LENGTH_LONG).show()
+            }
+
     }
 
+
+
     private fun initViews() {
-        teacherHeader = findViewById(R.id.teacherHeader)
+        parentHeader = findViewById(R.id.parentHeader)
         bottomNav = findViewById(R.id.bottomNav)
         calendarView = findViewById(R.id.calendarView)
         tvFechaSeleccionada = findViewById(R.id.tvFechaSeleccionada)
@@ -86,15 +112,16 @@ class CalendarioActivity : AppCompatActivity() {
 
     private fun setupHeaderFooter() {
 
-        // Configurar Header
-        teacherHeader.loadTeacherData(profesorId)
-        teacherHeader.setOnBackClickListener {
-            finish()
+        // SOLO cargar datos si estudianteId NO está vacío
+        if (estudianteId.isNotEmpty()) {
+            parentHeader.loadParentData(estudianteId)
         }
 
-        // Configurar Footer
-        bottomNav.setActiveItem(TeacherBottomNavigationView.NavigationItem.TAREAS)
+        parentHeader.setOnBackClickListener { finish() }
+
+        bottomNav.setActiveItem(ParentBottomNavigationView.NavigationItem.CALENDARIO)
     }
+
 
     private fun setupListeners() {
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
@@ -109,16 +136,15 @@ class CalendarioActivity : AppCompatActivity() {
     private fun cargarEventosYTareas() {
         eventosYTareas.clear()
 
-        // Cargar eventos
+        // Cargar eventos para el estudiante
         db.collection("mensajes_eventos")
             .whereEqualTo("tipo", "evento")
-            .whereEqualTo("profesor", profesorId)
+            .whereEqualTo("estudiante", estudianteId)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     val descripcion = document.getString("descripcion") ?: ""
                     val eventDate = document.getTimestamp("eventDate")
-                    val estudianteId = document.getString("estudiante")
 
                     if (eventDate != null) {
                         val fecha = eventDate.toDate()
@@ -127,10 +153,9 @@ class CalendarioActivity : AppCompatActivity() {
                         val evento = EventoTarea(
                             id = document.id,
                             tipo = "evento",
-                            titulo = "Evento",
+                            titulo = "Evento Escolar",
                             descripcion = descripcion,
-                            fecha = fecha,
-                            estudiante = estudianteId
+                            fecha = fecha
                         )
 
                         if (!eventosYTareas.containsKey(fechaKey)) {
@@ -145,13 +170,13 @@ class CalendarioActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al cargar eventos: ${e.message}", Toast.LENGTH_SHORT).show()
-                cargarTareas()
+
             }
     }
 
     private fun cargarTareas() {
         db.collection("tareas")
-            .whereEqualTo("profesor", profesorId)
+            .whereEqualTo("estudiante", estudianteId) // <-- CAMBIO AQUÍ
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -159,6 +184,7 @@ class CalendarioActivity : AppCompatActivity() {
                     val descripcion = document.getString("descripcion") ?: ""
                     val fechaEntrega = document.getTimestamp("fecha_entrega")
                     val materia = document.getString("materia")
+                    val estado = document.getString("estado") ?: "pendiente"
 
                     if (fechaEntrega != null) {
                         val fecha = fechaEntrega.toDate()
@@ -170,7 +196,8 @@ class CalendarioActivity : AppCompatActivity() {
                             titulo = titulo,
                             descripcion = descripcion,
                             fecha = fecha,
-                            materia = materia
+                            materia = materia,
+                            estado = estado
                         )
 
                         if (!eventosYTareas.containsKey(fechaKey)) {
@@ -180,7 +207,10 @@ class CalendarioActivity : AppCompatActivity() {
                     }
                 }
 
-                // Mostrar eventos de la fecha actual
+                if (fechaSeleccionada.isEmpty()) {
+                    fechaSeleccionada = formatearFecha(Date())
+                }
+
                 mostrarEventosDeFecha(fechaSeleccionada)
             }
             .addOnFailureListener { e ->
@@ -188,14 +218,16 @@ class CalendarioActivity : AppCompatActivity() {
             }
     }
 
+
+
     private fun formatearFecha(fecha: Date): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return sdf.format(fecha)
     }
 
     private fun actualizarTituloFecha(fecha: Date) {
-        val sdf = SimpleDateFormat("EEEE, d 'de' MMMM 'de' yyyy", Locale("es", "ES"))
-        tvFechaSeleccionada.text = sdf.format(fecha).capitalize()
+        val sdf = SimpleDateFormat("MMMM d, yyyy", Locale("en", "US"))
+        tvFechaSeleccionada.text = sdf.format(fecha)
     }
 
     private fun mostrarEventosDeFecha(fecha: String) {
@@ -205,10 +237,11 @@ class CalendarioActivity : AppCompatActivity() {
 
         if (eventos.isNullOrEmpty()) {
             val tvNoEventos = TextView(this)
-            tvNoEventos.text = "No hay eventos ni tareas para este día"
+            tvNoEventos.text = "No hay actividades programadas para este día"
             tvNoEventos.textSize = 16f
-            tvNoEventos.setTextColor(Color.GRAY)
-            tvNoEventos.setPadding(16, 32, 16, 16)
+            tvNoEventos.setTextColor(Color.parseColor("#757575"))
+            tvNoEventos.gravity = android.view.Gravity.CENTER
+            tvNoEventos.setPadding(16, 48, 16, 48)
             layoutEventos.addView(tvNoEventos)
             return
         }
@@ -224,41 +257,48 @@ class CalendarioActivity : AppCompatActivity() {
 
     private fun crearVistaEvento(evento: EventoTarea): View {
         val itemView = LayoutInflater.from(this).inflate(
-            android.R.layout.simple_list_item_2,
+            R.layout.item_calendar_event_a,
             layoutEventos,
             false
         )
 
-        val tvTitulo = itemView.findViewById<TextView>(android.R.id.text1)
-        val tvDetalle = itemView.findViewById<TextView>(android.R.id.text2)
+        val iconEvento = itemView.findViewById<ImageView>(R.id.iconEvento)
+        val tvTituloEvento = itemView.findViewById<TextView>(R.id.tvTituloEvento)
+        val tvTipoEvento = itemView.findViewById<TextView>(R.id.tvTipoEvento)
+        val tvDetalleEvento = itemView.findViewById<TextView>(R.id.tvDetalleEvento)
 
         // Configurar según el tipo
         if (evento.tipo == "evento") {
-            tvTitulo.text = "📅 ${evento.titulo}"
-            tvTitulo.setTextColor(ContextCompat.getColor(this, android.R.color.holo_blue_dark))
-            tvDetalle.text = evento.descripcion
+            iconEvento.setImageResource(R.drawable.ic_calendar)
+            iconEvento.setColorFilter(ContextCompat.getColor(this, R.color.blue_primary))
+            tvTituloEvento.text = evento.titulo
+            tvTipoEvento.text = "School Event"
+            tvTipoEvento.setTextColor(ContextCompat.getColor(this, R.color.blue_primary))
+            tvDetalleEvento.text = evento.descripcion
         } else {
-            tvTitulo.text = "📝 ${evento.titulo}"
-            tvTitulo.setTextColor(ContextCompat.getColor(this, android.R.color.holo_orange_dark))
-            val horario = SimpleDateFormat("HH:mm", Locale.getDefault()).format(evento.fecha)
-            tvDetalle.text = "${evento.descripcion}\n${evento.materia ?: ""}"
+            iconEvento.setImageResource(R.drawable.ic_tasks)
+
+            when (evento.estado) {
+                "completada" -> {
+                    iconEvento.setColorFilter(ContextCompat.getColor(this, R.color.green_success))
+                    tvTipoEvento.setTextColor(ContextCompat.getColor(this, R.color.green_success))
+                }
+                else -> {
+                    iconEvento.setColorFilter(ContextCompat.getColor(this, R.color.orange_accent))
+                    tvTipoEvento.setTextColor(ContextCompat.getColor(this, R.color.orange_accent))
+                }
+            }
+
+            tvTituloEvento.text = evento.titulo
+            tvTipoEvento.text = evento.materia ?: "Tarea"
+
+            val horario = SimpleDateFormat("h:mm a", Locale.getDefault()).format(evento.fecha)
+            tvDetalleEvento.text = if (evento.descripcion.isNotEmpty()) {
+                evento.descripcion
+            } else {
+                "Entrega: $horario"
+            }
         }
-
-        tvTitulo.textSize = 18f
-        tvDetalle.textSize = 14f
-        tvDetalle.setTextColor(Color.DKGRAY)
-
-        // Padding y margen
-        itemView.setPadding(24, 16, 24, 16)
-        val params = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-        params.setMargins(0, 0, 0, 16)
-        itemView.layoutParams = params
-
-        // Fondo con borde
-        itemView.setBackgroundResource(android.R.drawable.dialog_holo_light_frame)
 
         return itemView
     }

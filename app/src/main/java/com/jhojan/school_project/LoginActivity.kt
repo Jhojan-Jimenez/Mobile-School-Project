@@ -143,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
                             user.rol.equals("Estudiante", ignoreCase = true) ->
                                 Intent(this, StudentPanelActivity::class.java)
                             user.rol.equals("Acudiente", ignoreCase = true) ->
-                                Intent(this, GuardianPanelActivity::class.java)
+                                Intent(this, ParentHomeActivity::class.java)
                             user.rol.equals("Profesor", ignoreCase = true) ->
                                 Intent(this, TeacherPanelActivity::class.java)
                             else -> null
